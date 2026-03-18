@@ -1,0 +1,18 @@
+<header class="header">
+  <div class="header__logo">
+    <img src="assets/icons/logo.svg" alt="Planning Poker Logo" />
+  </div>
+
+  @if (gameName()) {
+    <h1 class="header__title">{{ gameName() }}</h1>
+  }
+
+  @if (userName()) {
+    <div class="header__actions">
+      <app-avatar [name]="userName()" size="md" />
+      <app-button variant="secondary" size="sm" (click)="onInviteClick()">
+        Invitar jugadores
+      </app-button>
+    </div>
+  }
+</header>
