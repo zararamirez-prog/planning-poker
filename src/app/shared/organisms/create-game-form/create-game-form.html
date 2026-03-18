@@ -9,7 +9,7 @@
   <app-button
     variant="primary"
     size="md"
-    [disabled]="touched() && !isValid()"
+    [disabled]="!gameName()"
     (click)="onSubmit()"
   >
     Crear partida

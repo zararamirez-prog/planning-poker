@@ -9,7 +9,6 @@
   position: relative;
 }
 
-/* States */
 .card--empty {
   background-color: transparent;
   border: 1.5px solid var(--color-accent);
@@ -26,7 +25,6 @@
   box-shadow: var(--glow-card);
 }
 
-/* Spectator */
 .card--spectator {
   background: repeating-linear-gradient(
     45deg,
@@ -38,7 +36,6 @@
   border: 1.5px solid var(--color-accent);
 }
 
-/* Selectable (pool de cartas) */
 .card--selectable {
   width: 3.5rem;
   height: 5rem;
@@ -51,7 +48,6 @@
   border-color: var(--color-accent-light);
 }
 
-/* Active (carta seleccionada del pool) */
 .card--active {
   transform: translateY(-8px);
   background-color: var(--color-accent);
@@ -59,7 +55,6 @@
   box-shadow: var(--glow-card);
 }
 
-/* Value */
 .card__value {
   font-family: var(--font-family);
   font-weight: var(--font-weight-bold);

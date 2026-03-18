@@ -15,10 +15,17 @@
 .btn--primary {
   background-color: var(--color-accent);
   color: var(--color-text-primary);
+  border: none;
+}
+
+.btn--primary:not(:disabled) {
+  background-color: #ffffff;
+  color: var(--color-accent);
 }
 
 .btn--primary:hover:not(:disabled) {
   background-color: var(--color-accent-light);
+  color: #ffffff;
   box-shadow: var(--glow-accent);
 }
 
@@ -63,6 +70,6 @@
 }
 
 .btn--disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }

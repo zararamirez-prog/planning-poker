@@ -1,11 +1,10 @@
 <header class="header">
-  <div class="header__logo">
-    <img src="assets/icons/logo.svg" alt="Planning Poker Logo" />
+  <div class="header__brand">
+    <img src="icons/logo.png" alt="Planning Poker logo" class="header__logo" />
+    @if (gameName()) {
+      <h1 class="header__title">{{ gameName() }}</h1>
+    }
   </div>
-
-  @if (gameName()) {
-    <h1 class="header__title">{{ gameName() }}</h1>
-  }
 
   @if (userName()) {
     <div class="header__actions">
