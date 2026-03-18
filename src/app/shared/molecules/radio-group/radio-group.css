@@ -1,0 +1,40 @@
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.radio-group__option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+}
+
+.radio-group__input {
+  display: none;
+}
+
+.radio-group__custom {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-normal);
+  flex-shrink: 0;
+}
+
+.radio-group__input:checked + .radio-group__custom {
+  border-color: var(--color-accent-light);
+  background-color: var(--color-accent);
+  box-shadow: var(--glow-accent);
+}
+
+.radio-group__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
