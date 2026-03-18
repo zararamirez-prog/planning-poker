@@ -1,0 +1,72 @@
+.card {
+  width: 3rem;
+  height: 4.5rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+/* States */
+.card--empty {
+  background-color: transparent;
+  border: 1.5px solid var(--color-accent);
+}
+
+.card--selected {
+  background-color: var(--color-card-selected);
+  border: 1.5px solid var(--color-accent-light);
+}
+
+.card--revealed {
+  background-color: var(--color-card-revealed);
+  border: none;
+  box-shadow: var(--glow-card);
+}
+
+/* Spectator */
+.card--spectator {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 4px,
+    rgba(124, 58, 237, 0.2) 4px,
+    rgba(124, 58, 237, 0.2) 8px
+  );
+  border: 1.5px solid var(--color-accent);
+}
+
+/* Selectable (pool de cartas) */
+.card--selectable {
+  width: 3.5rem;
+  height: 5rem;
+  cursor: pointer;
+}
+
+.card--selectable:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--glow-card);
+  border-color: var(--color-accent-light);
+}
+
+/* Active (carta seleccionada del pool) */
+.card--active {
+  transform: translateY(-8px);
+  background-color: var(--color-accent);
+  border-color: var(--color-accent-light);
+  box-shadow: var(--glow-card);
+}
+
+/* Value */
+.card__value {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+}
+
+.card--revealed .card__value {
+  color: var(--color-bg-primary);
+}

@@ -1,0 +1,16 @@
+<div class="input__wrapper">
+  @if (label()) {
+    <label class="input__label">{{ label() }}</label>
+  }
+  <input
+    [type]="type()"
+    [placeholder]="placeholder()"
+    [value]="value()"
+    [disabled]="disabled()"
+    [class]="inputClasses()"
+    (input)="onInput($event)"
+  />
+  @if (hasError() && errorMessage()) {
+    <span class="input__error">{{ errorMessage() }}</span>
+  }
+</div>
