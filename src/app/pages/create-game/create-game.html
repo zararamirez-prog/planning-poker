@@ -1,0 +1,30 @@
+<div class="create-game">
+  @if (showSplash()) {
+    <div class="splash" (click)="onScreenClick()">
+      <div class="splash__brand" [class.splash__brand--leaving]="isLeaving()">
+        <img
+          #splashLogo
+          src="icons/logo.png"
+          alt="Planning Poker logo"
+          class="splash__logo"
+          [style.transform]="logoTransform()"
+        />
+        <img
+          src="icons/pragma.png"
+          alt="Pragma"
+          class="splash__title"
+          [class.splash__title--hidden]="isLeaving()"
+        />
+      </div>
+    </div>
+  }
+
+  @if (!showSplash()) {
+    <div class="create-game__content">
+      <app-header gameName="Crear partida" />
+      <main class="create-game__main">
+        <app-create-game-form (gameCreated)="onGameCreated($event)" />
+      </main>
+    </div>
+  }
+</div>

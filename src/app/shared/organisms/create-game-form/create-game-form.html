@@ -1,0 +1,17 @@
+<div class="create-game-form">
+  <app-input
+    label="Nombra la partida"
+    [value]="gameName()"
+    [hasError]="touched() && !!errorMessage()"
+    [errorMessage]="errorMessage()"
+    (valueChange)="onNameChange($event)"
+  />
+  <app-button
+    variant="primary"
+    size="md"
+    [disabled]="!gameName()"
+    (click)="onSubmit()"
+  >
+    Crear partida
+  </app-button>
+</div>
