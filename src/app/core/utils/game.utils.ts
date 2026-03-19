@@ -17,7 +17,6 @@ export const createInitialGame = (name: string): Game => {
     name,
     status: 'waiting',
     inviteLink: `${window.location.origin}/game/${id}`,
-    cards: DEFAULT_CARDS,
     players: []
   };
 };

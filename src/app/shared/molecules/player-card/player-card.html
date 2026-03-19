@@ -1,7 +1,7 @@
 <div class="player-card">
   <app-card
     [state]="cardState()"
-    [value]="cardValue()"
+    [value]="cardValue()?.value ?? ''"
     [isSpectator]="isSpectator()"
   />
   @if (isCurrentUser()) {

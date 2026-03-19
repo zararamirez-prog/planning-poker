@@ -45,6 +45,7 @@ describe('PlayerCardComponent', () => {
 
   it('should pass cardState to card component', () => {
     componentRef.setInput('cardState', 'selected');
+    componentRef.setInput('cardValue', { id: '5', value: 5 });
     fixture.detectChanges();
     const card = fixture.debugElement.query(By.css('app-card'));
     expect(card).toBeTruthy();

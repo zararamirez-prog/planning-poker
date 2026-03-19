@@ -3,7 +3,6 @@ export interface Game {
   name: string;
   players: Player[];
   status: GameStatus;
-  cards: Card[];
   inviteLink: string;
 }
 
@@ -12,7 +11,7 @@ export interface Player {
   name: string;
   role: PlayerRole;
   mode: PlayerMode;
-  selectedCard: string | number | null;
+  selectedCard: Card | null;
 }
 
 export interface Card {

@@ -9,7 +9,6 @@ export class GameStore {
   readonly game = computed(() => this._game());
   readonly gameName = computed(() => this._game()?.name ?? '');
   readonly players = computed(() => this._game()?.players ?? []);
-  readonly cards = computed(() => this._game()?.cards ?? []);
   readonly status = computed(() => this._game()?.status ?? 'waiting');
   readonly inviteLink = computed(() => this._game()?.inviteLink ?? '');
 
