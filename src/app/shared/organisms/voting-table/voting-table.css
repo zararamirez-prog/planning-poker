@@ -1,0 +1,82 @@
+.voting-table {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 420px;
+}
+
+.voting-table__outer {
+  width: 603px;
+  height: 345px;
+  border-radius: 276px;
+  border: 2px solid var(--color-border);
+  box-shadow: 0px 0px 20px 0px rgba(189, 189, 255, 0.1) inset,
+              0px 0px 15px 0px rgba(100, 41, 205, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voting-table__middle {
+  width: 555px;
+  height: 298px;
+  border-radius: 276px;
+  border: 2px solid var(--color-border);
+  box-shadow: 0px 0px 20px 0px rgba(189, 189, 255, 0.2) inset,
+              0px 8px 16px 0px rgba(100, 41, 205, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voting-table__inner {
+  width: 521px;
+  height: 272px;
+  border-radius: 276px;
+  border: 1px solid var(--color-border);
+  background-color: rgba(31, 13, 63, 0.6);
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voting-table__players {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.voting-table__player {
+  pointer-events: all;
+}
+
+@media (max-width: 768px) {
+  .voting-table {
+    height: 320px;
+  }
+
+  .voting-table__outer {
+    width: 90vw;
+    height: calc(90vw * (345 / 603));
+    max-height: 345px;
+    border-radius: var(--radius-full);
+  }
+
+  .voting-table__middle {
+    width: calc(90vw * (555 / 603));
+    height: calc(90vw * (345 / 603) * (298 / 345));
+    border-radius: var(--radius-full);
+  }
+
+  .voting-table__inner {
+    width: calc(90vw * (521 / 603));
+    height: calc(90vw * (345 / 603) * (272 / 345));
+    border-radius: var(--radius-full);
+  }
+}

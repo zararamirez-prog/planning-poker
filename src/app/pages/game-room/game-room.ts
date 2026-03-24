@@ -1,8 +1,11 @@
 import { Component, computed, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderComponent } from '../../shared/organisms/header/header';
+import { VotingTableComponent } from '../../shared/organisms/voting-table/voting-table';
 import { CardComponent } from '../../shared/atoms/card/card';
+import { InviteLinkComponent } from '../../shared/molecules/invite-link/invite-link';
 import { UserFormComponent } from '../../shared/organisms/user-form/user-form';
+import { GameLayoutComponent } from '../../shared/templates/game-layout/game-layout';
 import { GameStore } from '../../core/store/game.store';
 import { DEFAULT_CARDS } from '../../core/utils/game.utils';
 import { PlayerMode } from '../../core/models/game.model';
@@ -10,7 +13,7 @@ import { PlayerMode } from '../../core/models/game.model';
 @Component({
   selector: 'app-game-room',
   standalone: true,
-  imports: [HeaderComponent, CardComponent, UserFormComponent],
+  imports: [GameLayoutComponent, HeaderComponent, VotingTableComponent, CardComponent, InviteLinkComponent, UserFormComponent],
   templateUrl: './game-room.html',
   styleUrl: './game-room.css'
 })
