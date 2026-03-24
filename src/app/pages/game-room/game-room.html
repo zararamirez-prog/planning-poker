@@ -1,0 +1,6 @@
+<app-header slot="header" [gameName]="gameName()" [userName]="currentUser()?.name ?? ''"
+  (inviteClick)="onInviteClick()" />
+
+@if (showUserForm()) {
+<app-user-form slot="modal" title="Tu nombre" (userCreated)="onUserCreated($event)" />
+}

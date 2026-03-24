@@ -7,11 +7,15 @@ describe('CreateGameComponent', () => {
   let component: CreateGameComponent;
   let fixture: ComponentFixture<CreateGameComponent>;
   let routerSpy: { navigate: ReturnType<typeof vi.fn> };
-  let gameStoreSpy: { createGame: ReturnType<typeof vi.fn> };
+  let gameStoreSpy: {
+    createGame: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(async () => {
     routerSpy = { navigate: vi.fn() };
-    gameStoreSpy = { createGame: vi.fn() };
+    gameStoreSpy = {
+      createGame: vi.fn()
+    };
 
     await TestBed.configureTestingModule({
       imports: [CreateGameComponent],

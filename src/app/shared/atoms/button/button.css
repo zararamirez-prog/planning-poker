@@ -5,7 +5,7 @@
   border: none;
   border-radius: var(--radius-full);
   font-family: var(--font-family);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
   transition: all var(--transition-normal);
   outline: none;
@@ -13,26 +13,24 @@
 }
 
 .btn--primary {
-  background-color: var(--color-accent);
+  background-color: var(--color-bg-disabled);
   color: var(--color-text-primary);
   border: none;
 }
 
 .btn--primary:not(:disabled) {
   background-color: #ffffff;
-  color: var(--color-accent);
+  color: var(--color-text-secondary);
 }
 
 .btn--primary:hover:not(:disabled) {
-  background-color: var(--color-accent-light);
-  color: #ffffff;
   box-shadow: var(--glow-accent);
 }
 
 .btn--secondary {
   background-color: transparent;
   color: var(--color-text-primary);
-  border: 1px solid var(--color-border);
+  border: 1px solid #ffffff;
 }
 
 .btn--secondary:hover:not(:disabled) {

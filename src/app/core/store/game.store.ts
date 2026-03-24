@@ -1,5 +1,5 @@
 import { Injectable, signal, computed } from '@angular/core';
-import { Game } from '../models/game.model';
+import { Game, Player, PlayerMode } from '../models/game.model';
 import { createInitialGame } from '../utils/game.utils';
 
 @Injectable({ providedIn: 'root' })
@@ -14,5 +14,21 @@ export class GameStore {
 
   createGame(name: string): void {
     this._game.set(createInitialGame(name));
+  }
+
+  addAdminPlayer(name: string, mode: PlayerMode): void {
+    const game = this._game();
+    if (!game) return;
+    const adminPlayer: Player = {
+      id: crypto.randomUUID(),
+      name,
+      role: 'admin',
+      mode,
+      selectedCard: null
+    };
+    this._game.set({
+      ...game,
+      players: [adminPlayer]
+    });
   }
 }

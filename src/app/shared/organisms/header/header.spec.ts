@@ -23,15 +23,37 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render game name when provided', () => {
+  it('should render game name centered when inline is false', () => {
     componentRef.setInput('gameName', 'Sprint 32');
+    componentRef.setInput('inline', false);
     fixture.detectChanges();
-    const title = fixture.debugElement.query(By.css('.header__title'));
-    expect(title.nativeElement.textContent).toBe('Sprint 32');
+    const title = fixture.debugElement.query(
+      By.css('.header__game-name:not(.header__game-name--inline)')
+    );
+    expect(title).toBeTruthy();
+    expect(title.nativeElement.textContent.trim()).toBe('Sprint 32');
   });
 
-  it('should not render title when gameName is empty', () => {
-    const title = fixture.debugElement.query(By.css('.header__title'));
+  it('should not render centered title when gameName is empty', () => {
+    componentRef.setInput('inline', false);
+    fixture.detectChanges();
+    const title = fixture.debugElement.query(By.css('.header__game-name'));
+    expect(title).toBeNull();
+  });
+
+  it('should render game name inline when inline is true', () => {
+    componentRef.setInput('gameName', 'Crear partida');
+    componentRef.setInput('inline', true);
+    fixture.detectChanges();
+    const title = fixture.debugElement.query(By.css('.header__game-name--inline'));
+    expect(title).toBeTruthy();
+    expect(title.nativeElement.textContent.trim()).toBe('Crear partida');
+  });
+
+  it('should not render inline title when gameName is empty', () => {
+    componentRef.setInput('inline', true);
+    fixture.detectChanges();
+    const title = fixture.debugElement.query(By.css('.header__game-name--inline'));
     expect(title).toBeNull();
   });
 
@@ -53,7 +75,7 @@ describe('HeaderComponent', () => {
     let emitted = false;
     component.inviteClick.subscribe(() => emitted = true);
     const button = fixture.debugElement.query(By.css('app-button'));
-    button.nativeElement.click();
+    button.triggerEventHandler('click', null);
     expect(emitted).toBe(true);
   });
 });

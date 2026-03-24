@@ -1,22 +1,32 @@
-import { Component, output, signal, computed } from '@angular/core';
+import { Component, input, output, computed, signal } from '@angular/core';
 import { InputComponent } from '../../atoms/input/input';
 import { ButtonComponent } from '../../atoms/button/button';
+import { RadioGroupComponent } from '../../molecules/radio-group/radio-group';
+import { PlayerMode } from '../../../core/models/game.model';
 
 @Component({
-  selector: 'app-create-game-form',
+  selector: 'app-user-form',
   standalone: true,
-  imports: [InputComponent, ButtonComponent],
-  templateUrl: './create-game-form.html',
-  styleUrl: './create-game-form.css'
+  imports: [InputComponent, ButtonComponent, RadioGroupComponent],
+  templateUrl: './user-form.html',
+  styleUrl: './user-form.css'
 })
-export class CreateGameFormComponent {
-  readonly gameCreated = output<string>();
+export class UserFormComponent {
+  readonly title = input<string>('Tu nombre');
 
-  readonly gameName = signal('');
+  readonly userCreated = output<{ name: string; mode: PlayerMode }>();
+
+  readonly name = signal('');
+  readonly mode = signal<PlayerMode>('player');
   readonly touched = signal(false);
 
+  readonly modeOptions = [
+    { label: 'Jugador', value: 'player' },
+    { label: 'Espectador', value: 'spectator' }
+  ];
+
   readonly errorMessage = computed(() => {
-    const name = this.gameName();
+    const name = this.name();
     if (!this.touched()) return '';
     if (!name) return 'El nombre es requerido';
     if (/[_,.*#/\-]/.test(name)) return 'El nombre no puede tener caracteres especiales';
@@ -28,7 +38,7 @@ export class CreateGameFormComponent {
   });
 
   readonly isValid = computed(() => {
-    const name = this.gameName();
+    const name = this.name();
     if (!name) return false;
     return !/[_,.*#/\-]/.test(name) &&
       !/^\d+$/.test(name) &&
@@ -38,13 +48,17 @@ export class CreateGameFormComponent {
   });
 
   onNameChange(value: string): void {
-    this.gameName.set(value);
+    this.name.set(value);
+  }
+
+  onModeChange(value: string): void {
+    this.mode.set(value as PlayerMode);
   }
 
   onSubmit(): void {
     this.touched.set(true);
     if (this.isValid()) {
-      this.gameCreated.emit(this.gameName());
+      this.userCreated.emit({ name: this.name(), mode: this.mode() });
     }
   }
 }

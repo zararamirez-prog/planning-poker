@@ -1,11 +1,8 @@
 <div class="player-card">
-  <app-card
-    [state]="cardState()"
-    [value]="cardValue()?.value ?? ''"
-    [isSpectator]="isSpectator()"
-  />
-  @if (isCurrentUser()) {
+  @if (isSpectator()) {
     <app-avatar [name]="playerName()" size="md" />
+  } @else {
+    <app-card [state]="cardState()" [value]="cardValue()?.value ?? ''" />
   }
   <span class="player-card__name">{{ playerName() }}</span>
 </div>
