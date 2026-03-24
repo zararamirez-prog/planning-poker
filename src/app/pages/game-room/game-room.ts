@@ -1,7 +1,6 @@
 import { Component, computed, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderComponent } from '../../shared/organisms/header/header';
-import { CardComponent } from '../../shared/atoms/card/card';
 import { UserFormComponent } from '../../shared/organisms/user-form/user-form';
 import { GameStore } from '../../core/store/game.store';
 import { DEFAULT_CARDS } from '../../core/utils/game.utils';
@@ -10,7 +9,7 @@ import { PlayerMode } from '../../core/models/game.model';
 @Component({
   selector: 'app-game-room',
   standalone: true,
-  imports: [HeaderComponent, CardComponent, UserFormComponent],
+  imports: [HeaderComponent, UserFormComponent],
   templateUrl: './game-room.html',
   styleUrl: './game-room.css'
 })
