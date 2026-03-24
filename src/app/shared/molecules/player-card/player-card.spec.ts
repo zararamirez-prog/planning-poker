@@ -30,30 +30,54 @@ describe('PlayerCardComponent', () => {
     expect(name.nativeElement.textContent).toBe('Luisa');
   });
 
-  it('should render avatar when isCurrentUser is true', () => {
-    componentRef.setInput('isCurrentUser', true);
+  it('should render card when player is not spectator', () => {
+    componentRef.setInput('isSpectator', false);
+    fixture.detectChanges();
+    const card = fixture.debugElement.query(By.css('app-card'));
+    expect(card).toBeTruthy();
+  });
+
+  it('should render avatar when player is spectator', () => {
+    componentRef.setInput('isSpectator', true);
     componentRef.setInput('playerName', 'Luisa');
     fixture.detectChanges();
     const avatar = fixture.debugElement.query(By.css('app-avatar'));
     expect(avatar).toBeTruthy();
   });
 
-  it('should not render avatar when isCurrentUser is false', () => {
+  it('should not render card when player is spectator', () => {
+    componentRef.setInput('isSpectator', true);
+    fixture.detectChanges();
+    const card = fixture.debugElement.query(By.css('app-card'));
+    expect(card).toBeNull();
+  });
+
+  it('should not render avatar when player is not spectator', () => {
+    componentRef.setInput('isSpectator', false);
+    fixture.detectChanges();
     const avatar = fixture.debugElement.query(By.css('app-avatar'));
     expect(avatar).toBeNull();
   });
 
-  it('should pass cardState to card component', () => {
+  it('should pass cardValue to card component', () => {
     componentRef.setInput('cardState', 'selected');
+    componentRef.setInput('cardValue', { id: '5', value: 5 });
     fixture.detectChanges();
     const card = fixture.debugElement.query(By.css('app-card'));
     expect(card).toBeTruthy();
   });
 
-  it('should pass isSpectator to card component', () => {
-    componentRef.setInput('isSpectator', true);
+  it('should pass empty string to card value when cardValue is null', () => {
+    componentRef.setInput('isSpectator', false);
+    componentRef.setInput('cardValue', null);
     fixture.detectChanges();
     const card = fixture.debugElement.query(By.css('app-card'));
     expect(card).toBeTruthy();
+  });
+
+  it('should mark current user with isCurrentUser input', () => {
+    componentRef.setInput('isCurrentUser', true);
+    fixture.detectChanges();
+    expect(component.isCurrentUser()).toBe(true);
   });
 });

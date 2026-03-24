@@ -3,8 +3,8 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-full);
-  background-color: var(--color-accent-light);
-  color: var(--color-bg-primary);
+  background-color: var(--color-bg-avatar);
+  color: var(--color-bg-secondary);
   font-family: var(--font-family);
   font-weight: var(--font-weight-bold);
   flex-shrink: 0;

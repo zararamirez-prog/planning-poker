@@ -1,0 +1,41 @@
+.user-form__overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background-color: var(--color-overlay);
+  z-index: var(--z-overlay);
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-2xl) var(--spacing-4xl) var(--spacing-xl) var(--spacing-4xl);
+  background-color: var(--color-bg-primary);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--glow-accent), var(--shadow-modal);
+  width: 30rem;
+}
+
+.user-form__title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  width: 80%;
+}
+
+.user-form app-input {
+  margin-bottom: var(--spacing-lg);
+  width: 80%;
+}
+
+.user-form app-button {
+  margin-top: var(--spacing-2xl);
+  width: auto;
+}

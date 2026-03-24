@@ -1,10 +1,15 @@
 <header class="header">
   <div class="header__brand">
     <img src="icons/logo.png" alt="Planning Poker logo" class="header__logo" />
-    @if (gameName()) {
-      <h1 class="header__title">{{ gameName() }}</h1>
+
+    @if (gameName() && inline()) {
+      <h1 class="header__game-name header__game-name--inline">{{ gameName() }}</h1>
     }
   </div>
+
+  @if (gameName() && !inline()) {
+    <h1 class="header__game-name">{{ gameName() }}</h1>
+  }
 
   @if (userName()) {
     <div class="header__actions">
