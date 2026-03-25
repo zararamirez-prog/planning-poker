@@ -42,22 +42,17 @@ describe('VotingTableComponent', () => {
     expect(cards.length).toBe(0);
   });
 
-  it('should calculate correct style for first player (top center)', () => {
-    const style = component.getPlayerStyle(0, 4);
-    expect(style['position']).toBe('absolute');
-    expect(style['transform']).toBe('translate(-50%, -50%)');
-    const top = parseFloat(style['top']);
-    expect(top).toBeCloseTo(172 - 190, 0);
-  });
-
-  it('should apply ngStyle to each player container', () => {
+  it('should apply custom style with angle to each player container', () => {
     componentRef.setInput('players', mockPlayers);
     fixture.detectChanges();
     const playerDivs = fixture.debugElement.queryAll(By.css('.voting-table__player'));
     expect(playerDivs.length).toBe(3);
-    playerDivs.forEach(div => {
+    playerDivs.forEach((div, idx) => {
       const style = div.nativeElement.style;
-      expect(style.position).toBe('absolute');
+      const angle = component.getAngle(idx, mockPlayers.length);
+      expect(style.getPropertyValue('--angle')).toBeTruthy();
+      const angleValue = parseFloat(style.getPropertyValue('--angle'));
+      expect(angleValue).toBeCloseTo(angle, 5);
     });
   });
 
@@ -68,5 +63,19 @@ describe('VotingTableComponent', () => {
     expect(outer).toBeTruthy();
     expect(middle).toBeTruthy();
     expect(inner).toBeTruthy();
+  });
+
+  it('should calculate angle correctly for first player (bottom)', () => {
+    const angle = component.getAngle(0, 4);
+    expect(angle).toBeCloseTo(Math.PI / 2, 5);
+  });
+
+  it('should calculate angle for second player (next clockwise)', () => {
+    const angle = component.getAngle(1, 4);
+    expect(angle).toBeCloseTo(Math.PI, 5);
+  });
+
+  it('should return 0 angle when total is 0', () => {
+    expect(component.getAngle(0, 0)).toBe(0);
   });
 });

@@ -1,43 +1,64 @@
-import { Component, computed, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, computed, inject, signal } from '@angular/core';
+import { GameLayoutComponent } from '../../shared/templates/game-layout/game-layout';
 import { HeaderComponent } from '../../shared/organisms/header/header';
 import { VotingTableComponent } from '../../shared/organisms/voting-table/voting-table';
-import { CardComponent } from '../../shared/atoms/card/card';
+import { CardPoolComponent } from '../../shared/organisms/card-pool/card-pool';
 import { InviteLinkComponent } from '../../shared/molecules/invite-link/invite-link';
 import { UserFormComponent } from '../../shared/organisms/user-form/user-form';
-import { GameLayoutComponent } from '../../shared/templates/game-layout/game-layout';
 import { GameStore } from '../../core/store/game.store';
-import { DEFAULT_CARDS } from '../../core/utils/game.utils';
-import { PlayerMode } from '../../core/models/game.model';
+import { Card } from '../../core/models/game.model';
 
 @Component({
   selector: 'app-game-room',
   standalone: true,
-  imports: [GameLayoutComponent, HeaderComponent, VotingTableComponent, CardComponent, InviteLinkComponent, UserFormComponent],
+  imports: [
+    GameLayoutComponent,
+    HeaderComponent,
+    VotingTableComponent,
+    CardPoolComponent,
+    InviteLinkComponent,
+    UserFormComponent
+  ],
   templateUrl: './game-room.html',
   styleUrl: './game-room.css'
 })
 export class GameRoomComponent {
-  readonly cards = DEFAULT_CARDS;
+  private gameStore = inject(GameStore);
+
   readonly showInviteModal = signal(false);
+  
+  readonly gameName = this.gameStore.gameName;
+  readonly players = this.gameStore.players;
+  readonly inviteLink = this.gameStore.inviteLink;
+  readonly currentPlayer = this.gameStore.currentPlayer;
+  readonly currentUserHasVoted = this.gameStore.currentUserHasVoted;
+  readonly currentUserCanVote = this.gameStore.currentUserCanVote;
+  readonly availableCards = this.gameStore.getAvailableCards();
+  
+  readonly currentUserId = computed(() => this.currentPlayer()?.id ?? '');
+  readonly showUserForm = computed(() => !this.currentPlayer());
+  
+  readonly selectedCardId = computed(() => {
+    const player = this.currentPlayer();
+    return player?.selectedCard?.id ?? null;
+  });
+  
+  readonly showCardPool = computed(() => {
+    const player = this.currentPlayer();
+    return player?.mode === 'player' 
+      && !this.currentUserHasVoted()
+      && this.gameStore.status() === 'voting';
+  });
 
-  readonly currentUser = computed(() =>
-    this.gameStore.players().find(p => p.role === 'admin') ?? null
-  );
-
-  readonly showUserForm = computed(() => !this.currentUser());
-  readonly currentUserId = computed(() => this.currentUser()?.id ?? '');
-  readonly gameName = computed(() => this.gameStore.gameName());
-  readonly players = computed(() => this.gameStore.players());
-  readonly inviteLink = computed(() => this.gameStore.inviteLink());
-
-  constructor(
-    private readonly router: Router,
-    private readonly gameStore: GameStore
-  ) {}
-
-  onUserCreated(data: { name: string; mode: PlayerMode }): void {
+  onUserCreated(data: { name: string; mode: 'player' | 'spectator' }): void {
     this.gameStore.addAdminPlayer(data.name, data.mode);
+  }
+
+  onCardSelected(card: Card): void {
+    const userId = this.currentUserId();
+    if (userId && this.currentUserCanVote()) {
+      this.gameStore.updatePlayerVote(userId, card);
+    }
   }
 
   onInviteClick(): void {

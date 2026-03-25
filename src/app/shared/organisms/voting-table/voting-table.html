@@ -9,18 +9,11 @@
 
   <div class="voting-table__players">
     @for (player of players(); track player.id; let i = $index) {
-      <div
-        class="voting-table__player"
-        [ngStyle]="getPlayerStyle(i, players().length)"
-      >
-        <app-player-card
-          [playerName]="player.name"
-          [isSpectator]="player.mode === 'spectator'"
-          [isCurrentUser]="player.id === currentUserId()"
-          [cardState]="player.selectedCard ? 'selected' : 'empty'"
-          [cardValue]="player.selectedCard"
-        />
-      </div>
+    <div class="voting-table__player" [style.--angle]="getAngle(i, players().length) + 'rad'">
+      <app-player-card [playerName]="player.name" [isSpectator]="player.mode === 'spectator'"
+        [isCurrentUser]="player.id === currentUserId()" [cardState]="player.selectedCard ? 'selected' : 'empty'"
+        [cardValue]="player.selectedCard" />
+    </div>
     }
   </div>
 </div>

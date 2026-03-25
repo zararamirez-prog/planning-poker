@@ -2,37 +2,25 @@
   <app-header
     slot="header"
     [gameName]="gameName()"
-    [userName]="currentUser()?.name ?? ''"
+    [userName]="currentPlayer()?.name ?? ''"
     (inviteClick)="onInviteClick()"
   />
 
-  <app-voting-table
-    slot="table"
-    [players]="players()"
-    [currentUserId]="currentUserId()"
-  />
+  <app-voting-table slot="table" [players]="players()" [currentUserId]="currentUserId()" />
 
-  @if (currentUser()?.mode === 'player') {
+  @if (showCardPool()) {
     <ng-container slot="pool">
-      <p class="game-room__pool-title">Elige una carta 👇</p>
-      <div class="game-room__cards">
-        @for (card of cards; track card.id) {
-          <app-card
-            [value]="card.value"
-            [isSelectable]="true"
-            state="revealed"
-          />
-        }
-      </div>
+      <app-card-pool
+        [cards]="availableCards"
+        [selectedCardId]="selectedCardId()"
+        [isDisabled]="!currentUserCanVote()"
+        (cardSelected)="onCardSelected($event)"
+      />
     </ng-container>
   }
 
   @if (showUserForm()) {
-    <app-user-form
-      slot="modal"
-      title="Tu nombre"
-      (userCreated)="onUserCreated($event)"
-    />
+    <app-user-form slot="modal" title="Tu nombre" (userCreated)="onUserCreated($event)" />
   }
 
   @if (showInviteModal()) {
