@@ -1,51 +1,23 @@
-.game-room__modal-overlay {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background-color: var(--color-overlay);
-}
-
-.game-room__modal {
-  background-color: var(--color-bg-table);
-  border: 1.5px solid var(--color-accent);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
-  width: 100%;
-  max-width: 28rem;
-  box-shadow: var(--glow-accent), var(--shadow-modal);
-}
-
-.game-room__modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--spacing-lg);
-}
-
-.game-room__modal-title {
+.game-room__pool-title {
   font-size: var(--font-size-md);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
 }
 
-.game-room__modal-close {
-  background: none;
-  border: none;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  font-size: var(--font-size-lg);
-  transition: color var(--transition-fast);
-}
-
-.game-room__modal-close:hover {
-  color: var(--color-text-primary);
+.game-room__cards {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
-  .game-room__modal {
-    max-width: 90vw;
-    padding: var(--spacing-lg);
+  .game-room__cards {
+    gap: var(--spacing-sm);
+  }
+
+  .game-room__pool-title {
+    font-size: var(--font-size-sm);
   }
 }

@@ -1,9 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { GameLayoutComponent } from '../../shared/templates/game-layout/game-layout';
 import { HeaderComponent } from '../../shared/organisms/header/header';
-import { VotingTableComponent } from '../../shared/organisms/voting-table/voting-table';
-import { CardPoolComponent } from '../../shared/organisms/card-pool/card-pool';
-import { InviteLinkComponent } from '../../shared/molecules/invite-link/invite-link';
 import { UserFormComponent } from '../../shared/organisms/user-form/user-form';
 import { GameStore } from '../../core/store/game.store';
 import { Card } from '../../core/models/game.model';
@@ -11,14 +8,7 @@ import { Card } from '../../core/models/game.model';
 @Component({
   selector: 'app-game-room',
   standalone: true,
-  imports: [
-    GameLayoutComponent,
-    HeaderComponent,
-    VotingTableComponent,
-    CardPoolComponent,
-    InviteLinkComponent,
-    UserFormComponent
-  ],
+  imports: [HeaderComponent, UserFormComponent],
   templateUrl: './game-room.html',
   styleUrl: './game-room.css'
 })
