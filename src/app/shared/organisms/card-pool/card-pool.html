@@ -1,0 +1,16 @@
+<div class="card-pool">
+  <p class="card-pool__title">Elige una carta 👇</p>
+  <div class="card-pool__cards">
+    @for (card of cards(); track card.id) {
+      <div class="card-pool__item">
+        <app-card
+          [state]="isCardSelected(card.id) ? 'selected' : 'revealed'"
+          [value]="card.value"
+          [isSelectable]="!isDisabled()"
+          [isActive]="isCardSelected(card.id)"
+          (click)="onCardClick(card)"
+        />
+      </div>
+    }
+  </div>
+</div>

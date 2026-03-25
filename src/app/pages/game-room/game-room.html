@@ -1,6 +1,37 @@
-<app-header slot="header" [gameName]="gameName()" [userName]="currentUser()?.name ?? ''"
-  (inviteClick)="onInviteClick()" />
+<app-game-layout>
+  <app-header
+    slot="header"
+    [gameName]="gameName()"
+    [userName]="currentPlayer()?.name ?? ''"
+    (inviteClick)="onInviteClick()"
+  />
 
-@if (showUserForm()) {
-<app-user-form slot="modal" title="Tu nombre" (userCreated)="onUserCreated($event)" />
-}
+  <app-voting-table slot="table" [players]="players()" [currentUserId]="currentUserId()" />
+
+  @if (showCardPool()) {
+    <ng-container slot="pool">
+      <app-card-pool
+        [cards]="availableCards"
+        [selectedCardId]="selectedCardId()"
+        [isDisabled]="!currentUserCanVote()"
+        (cardSelected)="onCardSelected($event)"
+      />
+    </ng-container>
+  }
+
+  @if (showUserForm()) {
+    <app-user-form slot="modal" title="Tu nombre" (userCreated)="onUserCreated($event)" />
+  }
+
+  @if (showInviteModal()) {
+    <div slot="modal" class="game-room__modal-overlay" (click)="onCloseInvite()">
+      <div class="game-room__modal" (click)="$event.stopPropagation()">
+        <div class="game-room__modal-header">
+          <h2 class="game-room__modal-title">Invitar jugadores</h2>
+          <button class="game-room__modal-close" (click)="onCloseInvite()">✕</button>
+        </div>
+        <app-invite-link [link]="inviteLink()" />
+      </div>
+    </div>
+  }
+</app-game-layout>

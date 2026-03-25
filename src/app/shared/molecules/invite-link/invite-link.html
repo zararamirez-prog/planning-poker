@@ -1,0 +1,12 @@
+<div class="invite-link">
+  <div class="invite-link__url">
+    <span class="invite-link__text">{{ link() }}</span>
+  </div>
+  <app-button
+    variant="primary"
+    size="md"
+    (click)="copyLink()"
+  >
+    {{ copied() ? '¡Copiado!' : 'Copiar link' }}
+  </app-button>
+</div>

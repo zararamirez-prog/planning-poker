@@ -1,6 +1,6 @@
 .card {
-  width: 3rem;
-  height: 5rem;
+  width: var(--card-w, 3rem);
+  height: var(--card-h, 5rem);
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
@@ -26,8 +26,6 @@
 }
 
 .card--selectable {
-  width: 3.5rem;
-  height: 5rem;
   cursor: pointer;
   box-shadow: none;
 }
@@ -47,6 +45,6 @@
 .card__value {
   font-family: var(--font-family);
   font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-md);
+  font-size: var(--card-font-size, var(--font-size-md));
   color: var(--color-text-primary);
 }

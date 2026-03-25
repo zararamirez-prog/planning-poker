@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-xs);
 }
 
 .player-card__name {
@@ -14,4 +14,37 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+@media (min-width: 1201px) and (max-width: 1440px) {
+  .player-card {
+    --card-w: 2.5rem;
+    --card-h: 4.25rem;
+    --card-font-size: var(--font-size-sm);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .player-card {
+    --card-w: 2.25rem;
+    --card-h: 3.75rem;
+    --card-font-size: var(--font-size-sm);
+  }
+
+  .player-card__name {
+    font-size: 0.65rem;
+    max-width: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .player-card {
+    --card-w: 2rem;
+    --card-h: 3.25rem;
+    --card-font-size: var(--font-size-xs);
+  }
+
+  .player-card__name {
+    max-width: 3.5rem;
+  }
 }
