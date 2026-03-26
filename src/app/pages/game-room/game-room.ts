@@ -2,13 +2,23 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { GameLayoutComponent } from '../../shared/templates/game-layout/game-layout';
 import { HeaderComponent } from '../../shared/organisms/header/header';
 import { UserFormComponent } from '../../shared/organisms/user-form/user-form';
+import { InviteModalComponent } from '../../shared/organisms/invite-modal/invite-modal';
+import { VotingTableComponent } from '../../shared/organisms/voting-table/voting-table';
+import { CardPoolComponent } from '../../shared/organisms/card-pool/card-pool';
 import { GameStore } from '../../core/store/game.store';
 import { Card } from '../../core/models/game.model';
 
 @Component({
   selector: 'app-game-room',
   standalone: true,
-  imports: [HeaderComponent, UserFormComponent],
+  imports: [
+    GameLayoutComponent,
+    HeaderComponent,
+    UserFormComponent,
+    InviteModalComponent,
+    VotingTableComponent,
+    CardPoolComponent,
+  ],
   templateUrl: './game-room.html',
   styleUrl: './game-room.css'
 })
@@ -16,7 +26,7 @@ export class GameRoomComponent {
   private gameStore = inject(GameStore);
 
   readonly showInviteModal = signal(false);
-  
+
   readonly gameName = this.gameStore.gameName;
   readonly players = this.gameStore.players;
   readonly inviteLink = this.gameStore.inviteLink;
@@ -24,18 +34,18 @@ export class GameRoomComponent {
   readonly currentUserHasVoted = this.gameStore.currentUserHasVoted;
   readonly currentUserCanVote = this.gameStore.currentUserCanVote;
   readonly availableCards = this.gameStore.getAvailableCards();
-  
+
   readonly currentUserId = computed(() => this.currentPlayer()?.id ?? '');
   readonly showUserForm = computed(() => !this.currentPlayer());
-  
+
   readonly selectedCardId = computed(() => {
     const player = this.currentPlayer();
     return player?.selectedCard?.id ?? null;
   });
-  
+
   readonly showCardPool = computed(() => {
     const player = this.currentPlayer();
-    return player?.mode === 'player' 
+    return player?.mode === 'player'
       && !this.currentUserHasVoted()
       && this.gameStore.status() === 'voting';
   });

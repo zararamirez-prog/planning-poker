@@ -32,8 +32,8 @@
   }
 
   .player-card__name {
-    font-size: 0.65rem;
-    max-width: 4rem;
+    font-size: var(--font-size-xxs);
+    max-width: var(--spacing-4xl);
   }
 }
 

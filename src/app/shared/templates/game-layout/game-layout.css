@@ -50,19 +50,32 @@
   }
 }
 
-@media (max-width: 768px) {
-  :root {
-    --header-h: 4rem;
-    --footer-h: 8.5rem;
-  }
 
-  .game-layout__main {
-    padding: 0 3.5rem;
-  }
+.game-layout__modal-host {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
 
-  .game-layout__footer {
-    padding: 0 var(--spacing-sm) var(--spacing-sm);
-    overflow: visible;
-    align-items: center;
-  }
+.game-layout__modal-host:has(*) {
+  pointer-events: all;
+}
+
+:root {
+  --header-h: 4rem;
+  --footer-h: 8.5rem;
+}
+
+.game-layout__main {
+  padding: 0 3.5rem;
+}
+
+.game-layout__footer {
+  padding: 0 var(--spacing-sm) var(--spacing-sm);
+  overflow: visible;
+  align-items: center;
 }
