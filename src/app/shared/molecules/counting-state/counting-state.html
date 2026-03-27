@@ -1,0 +1,23 @@
+<div class="counting-state">
+
+  @if (phase() === 'counting') {
+  <div class="counting-state__dots">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <span class="counting-state__label">Contando votos</span>
+  }
+
+  @if (showRevealBtn()) {
+  <app-button variant="ghost" size="md" (click)="onReveal()">
+    Revelar cartas
+  </app-button>
+
+  @if (!isAdmin()) {
+  <span class="counting-state__waiting-label">Esperando al administrador</span>
+  }
+  }
+
+</div>

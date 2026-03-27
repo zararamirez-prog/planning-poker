@@ -1,24 +1,15 @@
 .voting-table {
-  --available-h: calc(100dvh - 4.5rem - 8rem - 4rem);
-  --max-w-from-h: calc(var(--available-h) * (603 / 345));
-  --table-w: min(560px, calc(100vw - 9rem), var(--max-w-from-h));
-
+  --table-w: min(480px, 38vw, calc(48vh * (603 / 345)));
   --ratio-h: calc(345 / 603);
   --ratio-middle: calc(555 / 603);
   --ratio-inner: calc(521 / 603);
   --ratio-mh: calc(298 / 345);
   --ratio-ih: calc(272 / 345);
-
   --table-h: calc(var(--table-w) * var(--ratio-h));
-  --table-middle-w: calc(var(--table-w) * var(--ratio-middle));
-  --table-inner-w: calc(var(--table-w) * var(--ratio-inner));
-
-  --orbit-gap-x: 2.75rem;
-  --orbit-gap-y: 4.25rem;
-
+  --orbit-gap-x: 6rem;
+  --orbit-gap-y: 6rem;
   --orbit-rx: calc(var(--table-w) / 2 + var(--orbit-gap-x));
   --orbit-ry: calc(var(--table-h) / 2 + var(--orbit-gap-y));
-
   position: relative;
   width: var(--table-w);
   height: var(--table-h);
@@ -75,50 +66,34 @@
   left: 50%;
   top: 50%;
   pointer-events: all;
-
   transform:
-    translate(-50%, -50%) translate(calc(cos(var(--angle, 0rad)) * var(--orbit-rx)),
-      calc(sin(var(--angle, 0rad)) * var(--orbit-ry)));
-
+    translate(-50%, -50%) translate(
+      calc(cos(var(--angle, 0rad)) * var(--orbit-rx)),
+      calc(sin(var(--angle, 0rad)) * var(--orbit-ry))
+    );
   transition: transform var(--transition-normal);
 }
 
-@media (min-width: 1201px) and (max-width: 1440px) {
+@media (min-width: 1024px) and (max-width: 1280px) {
   .voting-table {
-    --available-h: calc(100dvh - 4.5rem - 8rem - 4rem);
-    --max-w-from-h: calc(var(--available-h) * (603 / 345));
-    --table-w: min(400px, calc(100vw - 9rem), var(--max-w-from-h));
-    --orbit-gap-x: 2.75rem;
-    --orbit-gap-y: 4.25rem;
+    --table-w: min(250px, 30vw, calc(32vh * (603 / 345)));
+    --orbit-gap-x: 4rem;
+    --orbit-gap-y: 4rem;
   }
 }
 
-@media (min-width: 1025px) and (max-width: 1200px) {
+@media (min-width: 769px) and (max-width: 1023px) {
   .voting-table {
-    --available-h: calc(100dvh - 4rem - 7.5rem - 4rem);
-    --max-w-from-h: calc(var(--available-h) * (603 / 345));
-    --table-w: min(500px, calc(100vw - 8rem), var(--max-w-from-h));
-    --orbit-gap-x: 2.5rem;
-    --orbit-gap-y: 3.75rem;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .voting-table {
-    --available-h: calc(100dvh - 4rem - 7.5rem - 4rem);
-    --max-w-from-h: calc(var(--available-h) * (603 / 345));
-    --table-w: min(440px, calc(100vw - 8rem), var(--max-w-from-h));
-    --orbit-gap-x: 2.25rem;
-    --orbit-gap-y: 3.5rem;
+    --table-w: min(260px, 40vw, calc(32vh * (603 / 345)));
+    --orbit-gap-x: 5rem;
+    --orbit-gap-y: 5rem;
   }
 }
 
 @media (max-width: 768px) {
   .voting-table {
-    --available-h: calc(100dvh - 4rem - 8.5rem - 6rem);
-    --max-w-from-h: calc(var(--available-h) * (603 / 345));
-    --table-w: min(320px, calc(100vw - 7rem), var(--max-w-from-h));
-    --orbit-gap-x: 1.75rem;
+    --table-w: min(190px, 52vw, calc(24vh * (603 / 345)));
+    --orbit-gap-x: 3rem;
     --orbit-gap-y: 3rem;
   }
 }

@@ -47,3 +47,38 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.input__error {
+  font-size: var(--font-size-xs);
+  color: #ef4444;
+}
+
+@media (min-width: 769px) and (max-width: 1280px) {
+  .input__label {
+    font-size: var(--font-size-xs);
+  }
+
+  .input__field {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+
+  .input__error {
+    font-size: var(--font-size-xxs);
+  }
+}
+
+@media (max-width: 768px) {
+  .input__label {
+    font-size: var(--font-size-xs);
+  }
+
+  .input__field {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+
+  .input__error {
+    font-size: var(--font-size-xxs);
+  }
+}

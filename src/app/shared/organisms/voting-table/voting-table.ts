@@ -1,27 +1,45 @@
-import { Component, input } from '@angular/core';
-import { Player } from '../../../core/models/game.model';
+import { Component, computed, input, output } from '@angular/core';
+import { Player, GameStatus } from '../../../core/models/game.model';
 import { PlayerCardComponent } from '../../molecules/player-card/player-card';
+import { CountingStateComponent } from '../../molecules/counting-state/counting-state';
 
-const MAX_PLAYERS = 8;
 const ELLIPSE_RATIO = 345 / 603;
 
 @Component({
   selector: 'app-voting-table',
   standalone: true,
-  imports: [PlayerCardComponent],
+  imports: [PlayerCardComponent, CountingStateComponent],
   templateUrl: './voting-table.html',
   styleUrl: './voting-table.css'
 })
 export class VotingTableComponent {
   readonly players = input<Player[]>([]);
   readonly currentUserId = input<string>('');
+  readonly gameStatus = input<GameStatus>('voting');
+  readonly isAdmin = input<boolean>(false);
+  readonly hasAnyVote = input<boolean>(false);
+
+  readonly revealCards = output<void>();
+
+  readonly allVoted = computed(() => {
+    const activePlayers = this.players().filter(p => p.mode !== 'spectator');
+    return activePlayers.length > 0 && activePlayers.every(p => p.selectedCard !== null);
+  });
+
+  readonly showCountingState = computed(() => {
+    return this.gameStatus() === 'voting' && this.hasAnyVote();
+  });
+
+  getCardState(player: Player): 'empty' | 'selected' | 'revealed' {
+    if (!player.selectedCard) return 'empty';
+    return this.gameStatus() === 'revealed' ? 'revealed' : 'selected';
+  }
 
   getAngle(index: number, total: number): number {
     if (total === 0) return 0;
 
-    const capped = Math.min(total, MAX_PLAYERS);
+    const capped = Math.min(total, 8);
     const step = (2 * Math.PI) / capped;
-
     const raw = Math.PI / 2 + step * index;
 
     return Math.atan2(

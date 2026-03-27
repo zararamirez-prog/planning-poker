@@ -80,4 +80,21 @@ describe('PlayerCardComponent', () => {
     fixture.detectChanges();
     expect(component.isCurrentUser()).toBe(true);
   });
+
+  it('should pass cardVariant to card component', () => {
+    componentRef.setInput('cardVariant', 'table');
+    componentRef.setInput('cardState', 'selected');
+    fixture.detectChanges();
+
+    const card = fixture.debugElement.query(By.css('app-card'));
+    expect(card.componentInstance.variant()).toBe('table');
+  });
+
+  it('should use table variant by default', () => {
+    componentRef.setInput('cardState', 'selected');
+    fixture.detectChanges();
+
+    const card = fixture.debugElement.query(By.css('app-card'));
+    expect(card.componentInstance.variant()).toBe('table');
+  });
 });

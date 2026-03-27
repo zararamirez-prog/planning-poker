@@ -1,5 +1,5 @@
 import { Component, input, computed } from '@angular/core';
-import { CardComponent, CardState } from '../../atoms/card/card';
+import { CardComponent, CardState, CardVariant } from '../../atoms/card/card';
 import { AvatarComponent } from '../../atoms/avatar/avatar';
 import { Card } from '../../../core/models/game.model';
 
@@ -16,4 +16,5 @@ export class PlayerCardComponent {
   readonly cardValue = input<Card | null>(null);
   readonly isSpectator = input<boolean>(false);
   readonly isCurrentUser = input<boolean>(false);
+  readonly cardVariant = input<CardVariant>('table');
 }
