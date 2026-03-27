@@ -69,8 +69,25 @@ describe('HeaderComponent', () => {
     expect(actions).toBeNull();
   });
 
+  it('should not render invite button when user is not admin', () => {
+    componentRef.setInput('userName', 'Luisa');
+    componentRef.setInput('isAdmin', false);
+    fixture.detectChanges();
+    const button = fixture.debugElement.query(By.css('app-button'));
+    expect(button).toBeNull();
+  });
+
+  it('should render invite button when user is admin', () => {
+    componentRef.setInput('userName', 'Luisa');
+    componentRef.setInput('isAdmin', true);
+    fixture.detectChanges();
+    const button = fixture.debugElement.query(By.css('app-button'));
+    expect(button).toBeTruthy();
+  });
+
   it('should emit inviteClick when button is clicked', () => {
     componentRef.setInput('userName', 'Luisa');
+    componentRef.setInput('isAdmin', true);
     fixture.detectChanges();
     let emitted = false;
     component.inviteClick.subscribe(() => emitted = true);

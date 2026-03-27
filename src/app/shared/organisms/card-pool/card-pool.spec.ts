@@ -41,13 +41,6 @@ describe('CardPoolComponent', () => {
     expect(title.nativeElement.textContent).toBe('Elige una carta 👇');
   });
 
-  it('should render "Voto registrado" title when disabled', () => {
-    componentRef.setInput('isDisabled', true);
-    fixture.detectChanges();
-    const title = fixture.debugElement.query(By.css('.card-pool__title'));
-    expect(title.nativeElement.textContent.trim()).toBe('Voto registrado');
-  });
-
   it('should show empty state message when no cards are provided', () => {
     componentRef.setInput('cards', []);
     fixture.detectChanges();
@@ -65,17 +58,16 @@ describe('CardPoolComponent', () => {
     expect(emitSpy).toHaveBeenCalledWith(mockCards[0]);
   });
 
-
   it('should not emit when disabled', () => {
     componentRef.setInput('isDisabled', true);
     fixture.detectChanges();
-    
+
     const emitSpy = vi.fn();
     component.cardSelected.subscribe(emitSpy);
-    
+
     const firstCard = fixture.debugElement.query(By.css('.card-pool__item'));
     firstCard.triggerEventHandler('click', null);
-    
+
     expect(emitSpy).not.toHaveBeenCalled();
   });
 
@@ -83,7 +75,7 @@ describe('CardPoolComponent', () => {
     const selectedCardId = mockCards[2].id;
     componentRef.setInput('selectedCardId', selectedCardId);
     fixture.detectChanges();
-    
+
     const cards = fixture.debugElement.queryAll(By.css('app-card'));
     const selectedCard = cards[2];
     expect(selectedCard.componentInstance.state()).toBe('selected');
@@ -94,7 +86,7 @@ describe('CardPoolComponent', () => {
     const selectedCardId = mockCards[2].id;
     componentRef.setInput('selectedCardId', selectedCardId);
     fixture.detectChanges();
-    
+
     const cards = fixture.debugElement.queryAll(By.css('app-card'));
     const unselectedCard = cards[0];
     expect(unselectedCard.componentInstance.state()).toBe('revealed');

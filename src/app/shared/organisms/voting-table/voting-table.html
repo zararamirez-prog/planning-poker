@@ -3,7 +3,7 @@
     <div class="voting-table__middle">
       <div class="voting-table__inner">
 
-        @if (gameStatus() === 'voting') {
+        @if (showCountingState()) {
           <app-counting-state
             [allVoted]="allVoted()"
             [isAdmin]="isAdmin()"

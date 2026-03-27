@@ -12,6 +12,11 @@ export const routes: Routes = [
       import('./pages/game-room/game-room').then(m => m.GameRoomComponent)
   },
   {
+    path: 'game/:id',
+    loadComponent: () =>
+      import('./pages/game-room/game-room').then(m => m.GameRoomComponent)
+  },
+  {
     path: '**',
     redirectTo: ''
   }

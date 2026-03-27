@@ -13,6 +13,7 @@ export class HeaderComponent {
   readonly gameName = input<string>('');
   readonly userName = input<string>('');
   readonly inline = input<boolean>(false);
+  readonly isAdmin = input<boolean>(false);
 
   readonly inviteClick = output<void>();
 

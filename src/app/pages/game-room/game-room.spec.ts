@@ -22,6 +22,9 @@ describe('GameRoomComponent', () => {
   afterEach(() => {
     (gameStore as any)._game.set(null);
     (gameStore as any)._currentPlayerId.set(null);
+    sessionStorage.removeItem('planning_poker_player_id');
+    localStorage.removeItem('planning_poker_game');
+    localStorage.removeItem('planning_poker_player_id');
   });
 
   it('should create', () => {
@@ -36,7 +39,7 @@ describe('GameRoomComponent', () => {
   it('should not show user form after creating admin', () => {
     component.onUserCreated({ name: 'Luisa', mode: 'player' });
     fixture.detectChanges();
-    
+
     expect(component.showUserForm()).toBe(false);
     expect(component.currentPlayer()?.name).toBe('Luisa');
   });
@@ -44,7 +47,7 @@ describe('GameRoomComponent', () => {
   it('should show card pool when current user is player and can vote', () => {
     component.onUserCreated({ name: 'Luisa', mode: 'player' });
     fixture.detectChanges();
-    
+
     expect(component.showCardPool()).toBe(true);
     expect(component.currentUserCanVote()).toBe(true);
     expect(component.currentUserHasVoted()).toBe(false);
@@ -53,7 +56,7 @@ describe('GameRoomComponent', () => {
   it('should not show card pool when current user is spectator', () => {
     component.onUserCreated({ name: 'Luisa', mode: 'spectator' });
     fixture.detectChanges();
-    
+
     expect(component.showCardPool()).toBe(false);
     expect(component.currentUserCanVote()).toBe(false);
   });
@@ -61,11 +64,11 @@ describe('GameRoomComponent', () => {
   it('should keep card pool visible but disabled after user has voted', () => {
     component.onUserCreated({ name: 'Luisa', mode: 'player' });
     fixture.detectChanges();
-    
+
     const mockCard = { id: '5', value: 5 };
     component.onCardSelected(mockCard);
     fixture.detectChanges();
-    
+
     expect(component.currentUserHasVoted()).toBe(true);
     expect(component.showCardPool()).toBe(true);
     expect(component.currentUserCanVote()).toBe(false);
@@ -74,31 +77,31 @@ describe('GameRoomComponent', () => {
   it('should update player vote when card is selected', () => {
     component.onUserCreated({ name: 'Luisa', mode: 'player' });
     fixture.detectChanges();
-    
+
     const mockCard = { id: '5', value: 5 };
     component.onCardSelected(mockCard);
     fixture.detectChanges();
-    
+
     expect(component.currentPlayer()?.selectedCard).toEqual(mockCard);
   });
 
   it('should not update vote if user cannot vote', () => {
     component.onUserCreated({ name: 'Luisa', mode: 'spectator' });
     fixture.detectChanges();
-    
+
     const mockCard = { id: '5', value: 5 };
     component.onCardSelected(mockCard);
     fixture.detectChanges();
-    
+
     expect(component.currentPlayer()?.selectedCard).toBeNull();
   });
 
   it('should toggle invite modal', () => {
     expect(component.showInviteModal()).toBe(false);
-    
+
     component.onInviteClick();
     expect(component.showInviteModal()).toBe(true);
-    
+
     component.onCloseInvite();
     expect(component.showInviteModal()).toBe(false);
   });

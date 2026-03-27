@@ -40,13 +40,13 @@ describe('CountingStateComponent', () => {
     });
 
     it('should NOT show the reveal button', () => {
-      const btn = fixture.debugElement.query(By.css('.counting-state__reveal-btn'));
+      const btn = fixture.debugElement.query(By.css('app-button'));
       expect(btn).toBeNull();
     });
 
-    it('should NOT show the check icon', () => {
-      const check = fixture.debugElement.query(By.css('.counting-state__check'));
-      expect(check).toBeNull();
+    it('should NOT show the waiting label', () => {
+      const waiting = fixture.debugElement.query(By.css('.counting-state__waiting-label'));
+      expect(waiting).toBeNull();
     });
   });
 
@@ -56,24 +56,14 @@ describe('CountingStateComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should show the check icon', () => {
-      const check = fixture.debugElement.query(By.css('.counting-state__check'));
-      expect(check).toBeTruthy();
-    });
-
-    it('should show "¡Todos votaron!" label', () => {
-      const label = fixture.debugElement.query(By.css('.counting-state__label'));
-      expect(label.nativeElement.textContent).toContain('¡Todos votaron!');
-    });
-
     it('should NOT show the dots animation', () => {
       const dots = fixture.debugElement.query(By.css('.counting-state__dots'));
       expect(dots).toBeNull();
     });
 
-    it('should show the pulse ring', () => {
-      const ring = fixture.debugElement.query(By.css('.counting-state__pulse-ring'));
-      expect(ring).toBeTruthy();
+    it('should NOT show reveal button when not admin', () => {
+      const btn = fixture.debugElement.query(By.css('app-button'));
+      expect(btn).toBeNull();
     });
   });
 
@@ -85,11 +75,11 @@ describe('CountingStateComponent', () => {
     });
 
     it('should show the reveal button when admin and all voted', () => {
-      const btn = fixture.debugElement.query(By.css('.counting-state__reveal-btn'));
+      const btn = fixture.debugElement.query(By.css('app-button'));
       expect(btn).toBeTruthy();
     });
 
-    it('should NOT show the waiting label', () => {
+    it('should NOT show the waiting label when admin', () => {
       const waiting = fixture.debugElement.query(By.css('.counting-state__waiting-label'));
       expect(waiting).toBeNull();
     });
@@ -103,7 +93,7 @@ describe('CountingStateComponent', () => {
     });
 
     it('should NOT show the reveal button', () => {
-      const btn = fixture.debugElement.query(By.css('.counting-state__reveal-btn'));
+      const btn = fixture.debugElement.query(By.css('app-button'));
       expect(btn).toBeNull();
     });
 

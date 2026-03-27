@@ -17,12 +17,17 @@ export class VotingTableComponent {
   readonly currentUserId = input<string>('');
   readonly gameStatus = input<GameStatus>('voting');
   readonly isAdmin = input<boolean>(false);
+  readonly hasAnyVote = input<boolean>(false);
 
   readonly revealCards = output<void>();
 
   readonly allVoted = computed(() => {
     const activePlayers = this.players().filter(p => p.mode !== 'spectator');
     return activePlayers.length > 0 && activePlayers.every(p => p.selectedCard !== null);
+  });
+
+  readonly showCountingState = computed(() => {
+    return this.gameStatus() === 'voting' && this.hasAnyVote();
   });
 
   getCardState(player: Player): 'empty' | 'selected' | 'revealed' {
@@ -35,7 +40,6 @@ export class VotingTableComponent {
 
     const capped = Math.min(total, 8);
     const step = (2 * Math.PI) / capped;
-
     const raw = Math.PI / 2 + step * index;
 
     return Math.atan2(

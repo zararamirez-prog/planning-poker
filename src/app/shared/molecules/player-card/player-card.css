@@ -3,6 +3,9 @@
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-xs);
+  --card-w: 2.75rem;
+  --card-h: 4.5rem;
+  --card-font-size: var(--font-size-md);
 }
 
 .player-card__name {
@@ -16,28 +19,20 @@
   white-space: nowrap;
 }
 
-@media (min-width: 1201px) and (max-width: 1440px) {
+@media (min-width: 1024px) and (max-width: 1280px) {
   .player-card {
-    --card-w: 2.5rem;
-    --card-h: 4.25rem;
-    --card-font-size: var(--font-size-sm);
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1200px) {
-  .player-card {
-    --card-w: 2.25rem;
-    --card-h: 3.75rem;
-    --card-font-size: var(--font-size-sm);
+    --card-w: 1.625rem;
+    --card-h: 2.75rem;
+    --card-font-size: var(--font-size-xxs);
   }
 
   .player-card__name {
-    font-size: var(--font-size-xxs);
-    max-width: var(--spacing-4xl);
+    font-size: var(--font-size-xs);
+    max-width: 3.5rem;
   }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 769px) and (max-width: 1023px) {
   .player-card {
     --card-w: 2rem;
     --card-h: 3.25rem;
@@ -45,6 +40,20 @@
   }
 
   .player-card__name {
-    max-width: 3.5;
+    font-size: var(--font-size-xs);
+    max-width: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .player-card {
+    --card-w: 1.5rem;
+    --card-h: 2.5rem;
+    --card-font-size: var(--font-size-xxs);
+  }
+
+  .player-card__name {
+    font-size: var(--font-size-xxs);
+    max-width: 3rem;
   }
 }
