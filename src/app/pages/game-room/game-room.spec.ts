@@ -58,7 +58,7 @@ describe('GameRoomComponent', () => {
     expect(component.currentUserCanVote()).toBe(false);
   });
 
-  it('should not show card pool after user has voted', () => {
+  it('should keep card pool visible but disabled after user has voted', () => {
     component.onUserCreated({ name: 'Luisa', mode: 'player' });
     fixture.detectChanges();
     
@@ -67,7 +67,8 @@ describe('GameRoomComponent', () => {
     fixture.detectChanges();
     
     expect(component.currentUserHasVoted()).toBe(true);
-    expect(component.showCardPool()).toBe(false);
+    expect(component.showCardPool()).toBe(true);
+    expect(component.currentUserCanVote()).toBe(false);
   });
 
   it('should update player vote when card is selected', () => {

@@ -1,19 +1,21 @@
 import { Card, Game } from '../models/game.model';
 
-export const DEFAULT_CARDS: Card[] = [
-  { id: '0', value: 0 },
-  { id: '1', value: 1 },
-  { id: '3', value: 3 },
-  { id: '5', value: 5 },
-  { id: '8', value: 8 },
-  { id: '13', value: 13 },
-  { id: '21', value: 21 },
-  { id: '34', value: 34 },
-  { id: '55', value: 55 },
-  { id: '89', value: 89 },
-  { id: '?', value: '?' },
-  { id: 'coffee', value: '☕' },
+export const DEFAULT_CARD_VALUES: (string | number)[] = [
+  0, 1, 3, 5, 8, 13, 21, 34, 55, 89, '?', '☕'
 ];
+
+export function createCards(values: (string | number)[]): Card[] {
+  const seen = new Set<string | number>();
+  return values
+    .filter(v => {
+      if (seen.has(v)) return false;
+      seen.add(v);
+      return true;
+    })
+    .map(v => ({ id: String(v), value: v }));
+}
+
+export const DEFAULT_CARDS: Card[] = createCards(DEFAULT_CARD_VALUES);
 
 export const createInitialGame = (name: string): Game => {
   const id = crypto.randomUUID();

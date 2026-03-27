@@ -25,12 +25,19 @@
   justify-content: center;
   gap: var(--spacing-sm);
   flex-wrap: wrap;
-  padding-top: 0.5rem;
+  padding-top: var(--spacing-lg);
 }
 
 .card-pool__item {
   cursor: pointer;
   flex-shrink: 0;
+}
+
+.card-pool__empty {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
@@ -50,6 +57,6 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--spacing-xs);
-    padding-top: 0.25rem;
+    padding-top: var(--spacing-sm);
   }
 }

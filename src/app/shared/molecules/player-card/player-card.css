@@ -45,6 +45,6 @@
   }
 
   .player-card__name {
-    max-width: 3.5rem;
+    max-width: 3.5;
   }
 }

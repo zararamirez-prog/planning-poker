@@ -2,7 +2,11 @@
   @if (isSpectator()) {
     <app-avatar [name]="playerName()" size="md" />
   } @else {
-    <app-card [state]="cardState()" [value]="cardValue()?.value ?? ''" />
+    <app-card 
+      [state]="cardState()" 
+      [value]="cardValue()?.value ?? ''"
+      [variant]="cardVariant()"
+    />
   }
   <span class="player-card__name">{{ playerName() }}</span>
 </div>

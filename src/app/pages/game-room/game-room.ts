@@ -33,7 +33,8 @@ export class GameRoomComponent {
   readonly currentPlayer = this.gameStore.currentPlayer;
   readonly currentUserHasVoted = this.gameStore.currentUserHasVoted;
   readonly currentUserCanVote = this.gameStore.currentUserCanVote;
-  readonly availableCards = this.gameStore.getAvailableCards();
+  readonly gameStatus = this.gameStore.status;
+  readonly availableCards = this.gameStore.availableCards;
 
   readonly currentUserId = computed(() => this.currentPlayer()?.id ?? '');
   readonly showUserForm = computed(() => !this.currentPlayer());
@@ -45,9 +46,8 @@ export class GameRoomComponent {
 
   readonly showCardPool = computed(() => {
     const player = this.currentPlayer();
-    return player?.mode === 'player'
-      && !this.currentUserHasVoted()
-      && this.gameStore.status() === 'voting';
+    if (!player) return false;
+    return player.mode === 'player' && this.gameStore.status() === 'voting';
   });
 
   onUserCreated(data: { name: string; mode: 'player' | 'spectator' }): void {

@@ -2,18 +2,35 @@
   <div class="voting-table__outer">
     <div class="voting-table__middle">
       <div class="voting-table__inner">
-        <ng-content />
+
+        @if (gameStatus() === 'voting') {
+          <app-counting-state
+            [allVoted]="allVoted()"
+            [isAdmin]="isAdmin()"
+            (revealCards)="revealCards.emit()"
+          />
+        }
+
+        @if (gameStatus() === 'revealed') {
+          <ng-content />
+        }
+
       </div>
     </div>
   </div>
 
   <div class="voting-table__players">
     @for (player of players(); track player.id; let i = $index) {
-    <div class="voting-table__player" [style.--angle]="getAngle(i, players().length) + 'rad'">
-      <app-player-card [playerName]="player.name" [isSpectator]="player.mode === 'spectator'"
-        [isCurrentUser]="player.id === currentUserId()" [cardState]="player.selectedCard ? 'selected' : 'empty'"
-        [cardValue]="player.selectedCard" />
-    </div>
+      <div class="voting-table__player" [style.--angle]="getAngle(i, players().length) + 'rad'">
+        <app-player-card
+          [playerName]="player.name"
+          [isSpectator]="player.mode === 'spectator'"
+          [isCurrentUser]="player.id === currentUserId()"
+          [cardState]="getCardState(player)"
+          [cardValue]="gameStatus() === 'revealed' ? player.selectedCard : null"
+          [cardVariant]="'table'"
+        />
+      </div>
     }
   </div>
 </div>

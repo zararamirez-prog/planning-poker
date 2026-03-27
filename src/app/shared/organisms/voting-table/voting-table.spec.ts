@@ -15,6 +15,8 @@ describe('VotingTableComponent', () => {
     { id: 'p3', name: 'Vale', role: 'player', mode: 'spectator', selectedCard: null },
   ];
 
+  const mockCard = { id: '5', value: 5 };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [VotingTableComponent]
@@ -77,5 +79,51 @@ describe('VotingTableComponent', () => {
 
   it('should return 0 angle when total is 0', () => {
     expect(component.getAngle(0, 0)).toBe(0);
+  });
+
+  describe('getCardState', () => {
+    it('should return empty when player has no selected card', () => {
+      const player: Player = { ...mockPlayers[0], selectedCard: null };
+      componentRef.setInput('gameStatus', 'voting');
+      expect(component.getCardState(player)).toBe('empty');
+    });
+
+    it('should return selected when player voted but game is still in voting phase', () => {
+      const player: Player = { ...mockPlayers[0], selectedCard: mockCard };
+      componentRef.setInput('gameStatus', 'voting');
+      expect(component.getCardState(player)).toBe('selected');
+    });
+
+    it('should return revealed when player voted and game is in revealed phase', () => {
+      const player: Player = { ...mockPlayers[0], selectedCard: mockCard };
+      componentRef.setInput('gameStatus', 'revealed');
+      expect(component.getCardState(player)).toBe('revealed');
+    });
+
+    it('should not reveal card value in template until game status is revealed', () => {
+      const votedPlayers = mockPlayers.map(p => ({ ...p, selectedCard: mockCard }));
+      componentRef.setInput('players', votedPlayers);
+      componentRef.setInput('gameStatus', 'voting');
+      fixture.detectChanges();
+
+      const playerCards = fixture.debugElement.queryAll(By.css('app-player-card'));
+      playerCards.forEach(card => {
+        expect(card.componentInstance.cardState()).toBe('selected');
+        expect(card.componentInstance.cardValue()).toBeNull();
+      });
+    });
+
+    it('should reveal card values in template when game status is revealed', () => {
+      const votedPlayers = mockPlayers.map(p => ({ ...p, selectedCard: mockCard }));
+      componentRef.setInput('players', votedPlayers);
+      componentRef.setInput('gameStatus', 'revealed');
+      fixture.detectChanges();
+
+      const playerCards = fixture.debugElement.queryAll(By.css('app-player-card'));
+      playerCards.forEach(card => {
+        expect(card.componentInstance.cardState()).toBe('revealed');
+        expect(card.componentInstance.cardValue()).toEqual(mockCard);
+      });
+    });
   });
 });

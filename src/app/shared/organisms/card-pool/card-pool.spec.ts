@@ -41,6 +41,23 @@ describe('CardPoolComponent', () => {
     expect(title.nativeElement.textContent).toBe('Elige una carta 👇');
   });
 
+  it('should render "Voto registrado" title when disabled', () => {
+    componentRef.setInput('isDisabled', true);
+    fixture.detectChanges();
+    const title = fixture.debugElement.query(By.css('.card-pool__title'));
+    expect(title.nativeElement.textContent.trim()).toBe('Voto registrado');
+  });
+
+  it('should show empty state message when no cards are provided', () => {
+    componentRef.setInput('cards', []);
+    fixture.detectChanges();
+    const empty = fixture.debugElement.query(By.css('.card-pool__empty'));
+    const title = fixture.debugElement.query(By.css('.card-pool__title'));
+    expect(empty).toBeTruthy();
+    expect(empty.nativeElement.textContent.trim()).toBe('No hay cartas registradas');
+    expect(title).toBeNull();
+  });
+
   it('should emit cardSelected when card is clicked and not disabled', () => {
     const emitSpy = vi.fn();
     component.cardSelected.subscribe(emitSpy);
