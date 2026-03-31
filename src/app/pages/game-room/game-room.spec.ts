@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GameRoomComponent } from './game-room';
-import { GameStore } from '../../core/store/game.store';
+import { GameStore } from '../../core/stores/game.store';
 
 describe('GameRoomComponent', () => {
   let component: GameRoomComponent;

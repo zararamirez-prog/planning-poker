@@ -29,7 +29,7 @@ export class GameStore implements OnDestroy {
     this.channel.close();
   }
 
-  // Computed signal
+  // Computed signals
 
   readonly game = computed(() => this._game());
   readonly gameName = computed(() => this._game()?.name ?? '');
@@ -68,6 +68,8 @@ export class GameStore implements OnDestroy {
 
   readonly voteGroups = computed(() => computeVoteGroups(this.players()));
 
+  readonly currentPlayerMode = computed(() => this.currentPlayer()?.mode ?? 'player');
+
   readonly average = computed(() => computeAverage(this.players()));
 
   // Storage helpers
@@ -89,7 +91,7 @@ export class GameStore implements OnDestroy {
     this.channel.postMessage(game);
   }
 
-  // Acciones
+  // Acciones 
 
   setCards(values: (string | number)[]): void {
     this._cards.set(createCards(values));
@@ -189,7 +191,6 @@ export class GameStore implements OnDestroy {
     this.saveToStorage(counting);
     this.broadcast(counting);
 
-    // después de 1.5s revela las cartas
     setTimeout(() => {
       const current = this._game();
       if (!current || current.status !== 'counting') return;
@@ -198,7 +199,7 @@ export class GameStore implements OnDestroy {
       this._game.set(revealed);
       this.saveToStorage(revealed);
       this.broadcast(revealed);
-    }, 10500);
+    }, 1500);
   }
 
   resetGame(): void {
@@ -209,6 +210,24 @@ export class GameStore implements OnDestroy {
       ...game,
       players: game.players.map(p => ({ ...p, selectedCard: null })),
       status: 'voting'
+    };
+
+    this._game.set(updated);
+    this.saveToStorage(updated);
+    this.broadcast(updated);
+  }
+
+  updatePlayerMode(playerId: string, mode: PlayerMode): void {
+    const game = this._game();
+    if (!game) return;
+
+    const updated: Game = {
+      ...game,
+      players: game.players.map(p =>
+        p.id === playerId
+          ? { ...p, mode, selectedCard: null }
+          : p
+      )
     };
 
     this._game.set(updated);

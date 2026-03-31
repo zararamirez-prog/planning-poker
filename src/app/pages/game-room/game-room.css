@@ -12,8 +12,6 @@
   justify-content: center;
 }
 
-/* [NUEVO] Mensaje de error cuando el link de invitación no es válido
-   en este navegador (ej: incógnito o navegador diferente al que creó la partida) */
 .game-room__error {
   background-color: var(--color-bg-primary);
   border: 1px solid var(--color-accent);
