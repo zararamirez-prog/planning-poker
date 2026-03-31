@@ -38,13 +38,13 @@
   transition: all var(--transition-normal);
 }
 
-.radio-group__input:checked + .radio-group__custom {
+.radio-group__input:checked+.radio-group__custom {
   border-color: var(--color-border);
   border-width: 2px;
   box-shadow: var(--glow-accent);
 }
 
-.radio-group__input:checked + .radio-group__custom::after {
+.radio-group__input:checked+.radio-group__custom::after {
   background-color: var(--color-border);
 }
 
@@ -52,4 +52,20 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-regular);
   color: var(--color-text-primary);
+}
+
+@media (max-width: 1280px) {
+  .radio-group__custom {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .radio-group__custom::after {
+    width: 0.55rem;
+    height: 0.55rem;
+  }
+
+  .radio-group__label {
+    font-size: var(--font-size-xs);
+  }
 }
