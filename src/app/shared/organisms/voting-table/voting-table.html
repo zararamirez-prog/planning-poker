@@ -3,12 +3,14 @@
     <div class="voting-table__middle">
       <div class="voting-table__inner">
 
+        @if (showRevealButton()) {
+          <app-button variant="ghost" size="md" (click)="revealCards.emit()">
+            Revelar cartas
+          </app-button>
+        }
+
         @if (showCountingState()) {
-          <app-counting-state
-            [allVoted]="allVoted()"
-            [isAdmin]="isAdmin()"
-            (revealCards)="revealCards.emit()"
-          />
+          <app-counting-state />
         }
 
         @if (gameStatus() === 'revealed' && isAdmin()) {
