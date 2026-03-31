@@ -8,67 +8,45 @@
   -webkit-backdrop-filter: blur(8px);
   background-color: var(--color-overlay);
   z-index: var(--z-overlay);
+  padding: var(--spacing-md);
 }
 
 .user-form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--spacing-2xl) var(--spacing-4xl) var(--spacing-xl) var(--spacing-4xl);
+  gap: var(--spacing-md);
+  width: min(30rem, 100%);
+  padding: var(--spacing-2xl) var(--spacing-4xl);
   background-color: var(--color-bg-primary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--glow-accent), var(--shadow-modal);
-  width: 30rem;
 }
 
 .user-form__title {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
-  margin-bottom: var(--spacing-sm);
   width: 80%;
 }
 
 .user-form app-input {
-  margin-bottom: var(--spacing-lg);
   width: 80%;
 }
 
 .user-form app-button {
-  margin-top: var(--spacing-2xl);
-  width: auto;
+  display: block;
+  margin-top: var(--spacing-md);
 }
 
-@media (min-width: 769px) and (max-width: 1280px) {
+@media (max-width: 1280px) {
   .user-form {
-    width: 24rem;
-    padding: var(--spacing-xl) var(--spacing-2xl) var(--spacing-lg) var(--spacing-2xl);
-  }
-
-  .user-form app-button {
-    margin-top: var(--spacing-lg);
-  }
-}
-
-@media (max-width: 768px) {
-  .user-form {
-    width: 90vw;
-    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-md) var(--spacing-lg);
+    width: min(20rem, 100%);
+    padding: var(--spacing-lg) var(--spacing-xl);
   }
 
   .user-form__title {
-    font-size: var(--font-size-xs);
-    width: 90%;
-  }
-
-  .user-form app-input {
-    width: 90%;
-    margin-bottom: var(--spacing-md);
-  }
-
-  .user-form app-button {
-    margin-top: var(--spacing-lg);
-    width: 100%;
+    font-size: var(--font-size-sm);
   }
 }
