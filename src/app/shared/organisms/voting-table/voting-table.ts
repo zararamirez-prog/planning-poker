@@ -29,7 +29,11 @@ export class VotingTableComponent {
   });
 
   readonly showCountingState = computed(() => {
-    return this.gameStatus() === 'voting' && this.hasAnyVote();
+    return this.gameStatus() === 'counting';
+  });
+
+  readonly showRevealButton = computed(() => {
+    return this.gameStatus() === 'voting' && this.allVoted() && this.isAdmin();
   });
 
   getCardState(player: Player): 'empty' | 'selected' | 'revealed' {

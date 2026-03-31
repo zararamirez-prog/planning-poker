@@ -19,6 +19,6 @@ export interface Card {
   value: string | number;
 }
 
-export type GameStatus = 'waiting' | 'voting' | 'revealed';
+export type GameStatus = 'waiting' | 'voting' | 'counting' | 'revealed';
 export type PlayerRole = 'admin' | 'player';
 export type PlayerMode = 'player' | 'spectator';

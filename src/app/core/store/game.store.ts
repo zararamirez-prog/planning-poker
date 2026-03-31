@@ -29,7 +29,7 @@ export class GameStore implements OnDestroy {
     this.channel.close();
   }
 
-  // Computed signals 
+  // Computed signal
 
   readonly game = computed(() => this._game());
   readonly gameName = computed(() => this._game()?.name ?? '');
@@ -184,10 +184,21 @@ export class GameStore implements OnDestroy {
     const game = this._game();
     if (!game || !this.isCurrentUserAdmin()) return;
 
-    const updated: Game = { ...game, status: 'revealed' };
-    this._game.set(updated);
-    this.saveToStorage(updated);
-    this.broadcast(updated);
+    const counting: Game = { ...game, status: 'counting' };
+    this._game.set(counting);
+    this.saveToStorage(counting);
+    this.broadcast(counting);
+
+    // después de 1.5s revela las cartas
+    setTimeout(() => {
+      const current = this._game();
+      if (!current || current.status !== 'counting') return;
+
+      const revealed: Game = { ...current, status: 'revealed' };
+      this._game.set(revealed);
+      this.saveToStorage(revealed);
+      this.broadcast(revealed);
+    }, 10500);
   }
 
   resetGame(): void {
