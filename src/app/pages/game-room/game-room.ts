@@ -102,6 +102,10 @@ export class GameRoomComponent implements OnInit {
     this.gameStore.revealCards();
   }
 
+  onResetGame(): void {
+    this.gameStore.resetGame();
+  }
+
   onInviteClick(): void {
     this.showInviteModal.set(true);
   }

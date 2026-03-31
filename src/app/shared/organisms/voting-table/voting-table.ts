@@ -2,13 +2,14 @@ import { Component, computed, input, output } from '@angular/core';
 import { Player, GameStatus } from '../../../core/models/game.model';
 import { PlayerCardComponent } from '../../molecules/player-card/player-card';
 import { CountingStateComponent } from '../../molecules/counting-state/counting-state';
+import { ButtonComponent } from '../../atoms/button/button';
 
 const ELLIPSE_RATIO = 345 / 603;
 
 @Component({
   selector: 'app-voting-table',
   standalone: true,
-  imports: [PlayerCardComponent, CountingStateComponent],
+  imports: [PlayerCardComponent, CountingStateComponent, ButtonComponent],
   templateUrl: './voting-table.html',
   styleUrl: './voting-table.css'
 })
@@ -20,6 +21,7 @@ export class VotingTableComponent {
   readonly hasAnyVote = input<boolean>(false);
 
   readonly revealCards = output<void>();
+  readonly resetGame = output<void>();
 
   readonly allVoted = computed(() => {
     const activePlayers = this.players().filter(p => p.mode !== 'spectator');
