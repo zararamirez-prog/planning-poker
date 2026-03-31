@@ -14,11 +14,9 @@
   @if (userName()) {
     <div class="header__actions">
       <app-avatar [name]="userName()" size="md" />
-      @if (isAdmin()) {
-        <app-button variant="secondary" size="sm" (click)="onInviteClick()">
-          Invitar jugadores
-        </app-button>
-      }
+      <app-button variant="secondary" size="sm" (click)="onInviteClick()">
+        Invitar jugadores
+      </app-button>
     </div>
   }
 </header>
