@@ -11,8 +11,10 @@
           />
         }
 
-        @if (gameStatus() === 'revealed') {
-          <ng-content />
+        @if (gameStatus() === 'revealed' && isAdmin()) {
+          <app-button variant="ghost" size="md" (click)="resetGame.emit()">
+            Nueva votación
+          </app-button>
         }
 
       </div>
