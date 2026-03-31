@@ -69,12 +69,12 @@ describe('HeaderComponent', () => {
     expect(actions).toBeNull();
   });
 
-  it('should not render invite button when user is not admin', () => {
+  it('should render invite button when user is logged in regardless of role', () => {
     componentRef.setInput('userName', 'Luisa');
     componentRef.setInput('isAdmin', false);
     fixture.detectChanges();
     const button = fixture.debugElement.query(By.css('app-button'));
-    expect(button).toBeNull();
+    expect(button).toBeTruthy();
   });
 
   it('should render invite button when user is admin', () => {
@@ -87,7 +87,7 @@ describe('HeaderComponent', () => {
 
   it('should emit inviteClick when button is clicked', () => {
     componentRef.setInput('userName', 'Luisa');
-    componentRef.setInput('isAdmin', true);
+    componentRef.setInput('isAdmin', false);
     fixture.detectChanges();
     let emitted = false;
     component.inviteClick.subscribe(() => emitted = true);
