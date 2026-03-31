@@ -28,6 +28,15 @@
     </ng-container>
   }
 
+  @if (showVoteSummary()) {
+    <ng-container slot="pool">
+      <app-vote-summary
+        [voteGroups]="voteGroups()"
+        [average]="average()"
+      />
+    </ng-container>
+  }
+
   @if (showUserForm() && gameExists()) {
     <app-user-form slot="modal" title="Tu nombre" (userCreated)="onUserCreated($event)" />
   }

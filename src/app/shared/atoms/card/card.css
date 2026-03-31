@@ -21,6 +21,7 @@
 
 .card--table.card--selected {
   background-color: var(--color-border);
+  box-shadow: var(--glow-card-selected);
 }
 
 .card--revealed {

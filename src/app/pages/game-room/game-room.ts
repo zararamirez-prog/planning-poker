@@ -6,6 +6,7 @@ import { UserFormComponent } from '../../shared/organisms/user-form/user-form';
 import { InviteModalComponent } from '../../shared/organisms/invite-modal/invite-modal';
 import { VotingTableComponent } from '../../shared/organisms/voting-table/voting-table';
 import { CardPoolComponent } from '../../shared/organisms/card-pool/card-pool';
+import { VoteSummaryComponent } from '../../shared/molecules/vote-summary/vote-summary';
 import { GameStore } from '../../core/store/game.store';
 import { Card } from '../../core/models/game.model';
 
@@ -19,6 +20,7 @@ import { Card } from '../../core/models/game.model';
     InviteModalComponent,
     VotingTableComponent,
     CardPoolComponent,
+    VoteSummaryComponent,
   ],
   templateUrl: './game-room.html',
   styleUrl: './game-room.css'
@@ -42,10 +44,11 @@ export class GameRoomComponent implements OnInit {
   readonly isAdmin = this.gameStore.isCurrentUserAdmin;
   readonly hasAnyVote = this.gameStore.hasAnyVote;
 
-  // [NUEVO] Indica si hay un juego cargado en el store
-  // Usado para mostrar error cuando el link no es válido en este navegador
-  readonly gameExists = computed(() => this.gameStore.game() !== null);
+  /** Datos para VoteSummaryComponent */
+  readonly voteGroups = this.gameStore.voteGroups;
+  readonly average = this.gameStore.average;
 
+  readonly gameExists = computed(() => this.gameStore.game() !== null);
   readonly currentUserId = computed(() => this.currentPlayer()?.id ?? '');
   readonly showUserForm = computed(() => !this.currentPlayer());
 
@@ -60,6 +63,9 @@ export class GameRoomComponent implements OnInit {
     return player.mode === 'player' && this.gameStore.status() === 'voting';
   });
 
+  /** Muestra el resumen de votos en el footer cuando las cartas están reveladas */
+  readonly showVoteSummary = computed(() => this.gameStore.status() === 'revealed');
+
   ngOnInit(): void {
     const gameId = this.route.snapshot.paramMap.get('id');
     if (gameId) {
@@ -68,9 +74,6 @@ export class GameRoomComponent implements OnInit {
 
       const currentPlayer = this.gameStore.currentPlayer();
 
-      // [CORREGIDO] Solo conserva la sesión si el jugador que está en storage
-      // es un jugador normal (no admin) — significa que recargó la página
-      // Si es admin o no hay sesión, limpia para que el nuevo jugador ingrese su nombre
       const isReturningPlayer = currentPlayer !== null
         && currentPlayer.role !== 'admin';
 
@@ -80,7 +83,6 @@ export class GameRoomComponent implements OnInit {
     }
   }
 
-  // Decide entre joinGame (invitado por link) o addAdminPlayer (creador de partida)
   onUserCreated(data: { name: string; mode: 'player' | 'spectator' }): void {
     if (this.isJoining() && this.gameIdFromUrl()) {
       this.gameStore.joinGame(this.gameIdFromUrl()!, data.name, data.mode);

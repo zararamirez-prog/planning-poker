@@ -1,6 +1,6 @@
 import { Injectable, signal, computed, OnDestroy } from '@angular/core';
 import { Game, Player, PlayerMode, Card } from '../models/game.model';
-import { createInitialGame, createCards, DEFAULT_CARDS } from '../utils/game.utils';
+import { createInitialGame, createCards, DEFAULT_CARDS, computeVoteGroups, computeAverage } from '../utils/game.utils';
 
 @Injectable({ providedIn: 'root' })
 export class GameStore implements OnDestroy {
@@ -11,22 +11,15 @@ export class GameStore implements OnDestroy {
   private readonly STORAGE_KEY = 'planning_poker_game';
   private readonly PLAYER_KEY = 'planning_poker_player_id';
 
-  // Canal de comunicación entre pestañas del mismo origen
-  // Permite sincronizar el estado del juego en tiempo real sin backend
   private readonly channel = new BroadcastChannel('planning_poker');
 
   constructor() {
-    // Restaura el juego desde localStorage al inicializar (compartido entre pestañas)
     const savedGame = this.loadFromStorage();
     if (savedGame) this._game.set(savedGame);
 
-    // [CORREGIDO] Usa sessionStorage para el PLAYER_KEY
-    // sessionStorage es por pestaña — cada pestaña recuerda su propio jugador
-    // Esto evita que pestañas nuevas hereden el jugador de otra pestaña
     const savedPlayerId = sessionStorage.getItem(this.PLAYER_KEY);
     if (savedPlayerId) this._currentPlayerId.set(savedPlayerId);
 
-    // Escucha cambios emitidos por otras pestañas y actualiza el signal del juego
     this.channel.onmessage = (event: MessageEvent<Game | null>) => {
       this._game.set(event.data);
     };
@@ -36,7 +29,7 @@ export class GameStore implements OnDestroy {
     this.channel.close();
   }
 
-  // ─── Computed signals ────────────────────────────────────────────────────
+  // Computed signals 
 
   readonly game = computed(() => this._game());
   readonly gameName = computed(() => this._game()?.name ?? '');
@@ -73,9 +66,12 @@ export class GameStore implements OnDestroy {
     return this.players().some(p => p.mode === 'player' && p.selectedCard !== null);
   });
 
-  // ─── Storage helpers ─────────────────────────────────────────────────────
+  readonly voteGroups = computed(() => computeVoteGroups(this.players()));
 
-  // El juego va en localStorage — compartido entre todas las pestañas del origen
+  readonly average = computed(() => computeAverage(this.players()));
+
+  // Storage helpers
+
   private saveToStorage(game: Game | null): void {
     if (game) {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(game));
@@ -89,12 +85,11 @@ export class GameStore implements OnDestroy {
     return raw ? JSON.parse(raw) : null;
   }
 
-  // Emite el estado actualizado a todas las pestañas que escuchan el canal
   private broadcast(game: Game | null): void {
     this.channel.postMessage(game);
   }
 
-  // ─── Acciones ────────────────────────────────────────────────────────────
+  // Acciones
 
   setCards(values: (string | number)[]): void {
     this._cards.set(createCards(values));
@@ -104,7 +99,6 @@ export class GameStore implements OnDestroy {
     const game = createInitialGame(gameName);
     this._game.set(game);
     this.saveToStorage(game);
-    // No broadcast aquí — el juego recién creado aún no tiene jugadores
   }
 
   addAdminPlayer(name: string, mode: PlayerMode): void {
@@ -130,7 +124,6 @@ export class GameStore implements OnDestroy {
     this.broadcast(updated);
 
     this._currentPlayerId.set(adminPlayer.id);
-    // [CORREGIDO] sessionStorage — solo esta pestaña recuerda que es el admin
     sessionStorage.setItem(this.PLAYER_KEY, adminPlayer.id);
   }
 
@@ -138,7 +131,7 @@ export class GameStore implements OnDestroy {
     const game = this._game();
 
     if (!game) {
-      console.warn('No existe una partida activa. El link solo funciona en el mismo navegador donde se creó la partida.');
+      console.warn('No existe una partida activa.');
       return;
     }
 
@@ -163,13 +156,9 @@ export class GameStore implements OnDestroy {
 
     this._game.set(updated);
     this.saveToStorage(updated);
-    // Notifica a todas las pestañas que un nuevo jugador se unió
     this.broadcast(updated);
 
     this._currentPlayerId.set(newPlayer.id);
-    // [CORREGIDO] sessionStorage — solo esta pestaña recuerda que es este jugador
-    // Otras pestañas que abran el link tendrán su sessionStorage vacío
-    // y deberán ingresar su propio nombre
     sessionStorage.setItem(this.PLAYER_KEY, newPlayer.id);
   }
 
