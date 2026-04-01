@@ -33,6 +33,12 @@
           [cardState]="getCardState(player)"
           [cardValue]="gameStatus() === 'revealed' ? player.selectedCard : null"
           [cardVariant]="'table'"
+          [menuDirection]="getMenuDirection(i, players().length)"
+          [isAdmin]="isAdmin()"
+          [isPlayerAdmin]="player.role === 'admin'"
+          [isMenuOpen]="openMenuPlayerId() === player.id"
+          (menuToggle)="openMenuPlayerId.set(openMenuPlayerId() === player.id ? null : player.id)"
+          (promotePlayer)="promotePlayer.emit(player.id); openMenuPlayerId.set(null)"
         />
       </div>
     }

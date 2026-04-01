@@ -1,4 +1,4 @@
-import { Component, input, computed } from '@angular/core';
+import { Component, input, output, computed } from '@angular/core';
 import { CardComponent, CardState, CardVariant } from '../../atoms/card/card';
 import { AvatarComponent } from '../../atoms/avatar/avatar';
 import { Card } from '../../../core/models/game.model';
@@ -17,4 +17,29 @@ export class PlayerCardComponent {
   readonly isSpectator = input<boolean>(false);
   readonly isCurrentUser = input<boolean>(false);
   readonly cardVariant = input<CardVariant>('table');
+  readonly isAdmin = input<boolean>(false);
+  readonly isPlayerAdmin = input<boolean>(false);
+  readonly menuDirection = input<'up' | 'down'>('up');
+  readonly isMenuOpen = input<boolean>(false);
+
+  readonly promotePlayer = output<void>();
+  readonly menuToggle = output<void>();
+
+  readonly canPromote = computed(() =>
+    this.isAdmin() && !this.isCurrentUser() && !this.isPlayerAdmin()
+  );
+
+  onCardClick(): void {
+    if (this.canPromote()) {
+      this.menuToggle.emit();
+    }
+  }
+
+  onPromote(): void {
+    this.promotePlayer.emit();
+  }
+
+  onCloseMenu(): void {
+    this.menuToggle.emit();
+  }
 }

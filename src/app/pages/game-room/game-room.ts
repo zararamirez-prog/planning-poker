@@ -108,6 +108,10 @@ export class GameRoomComponent implements OnInit {
     }
   }
 
+  onPromotePlayer(playerId: string): void {
+    this.gameStore.promoteToAdmin(playerId);
+  }
+
   onResetGame(): void {
     this.gameStore.resetGame();
   }

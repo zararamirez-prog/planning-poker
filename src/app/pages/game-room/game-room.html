@@ -18,6 +18,7 @@
     [hasAnyVote]="hasAnyVote()"
     (revealCards)="onRevealCards()"
     (resetGame)="onResetGame()"
+    (promotePlayer)="onPromotePlayer($event)"
   />
 
   @if (showCardPool()) {
