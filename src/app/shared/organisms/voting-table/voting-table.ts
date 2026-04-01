@@ -1,4 +1,4 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { Player, GameStatus } from '../../../core/models/game.model';
 import { PlayerCardComponent } from '../../molecules/player-card/player-card';
 import { CountingStateComponent } from '../../molecules/counting-state/counting-state';
@@ -22,6 +22,9 @@ export class VotingTableComponent {
 
   readonly revealCards = output<void>();
   readonly resetGame = output<void>();
+  readonly promotePlayer = output<string>();
+
+  readonly openMenuPlayerId = signal<string | null>(null);
 
   readonly allVoted = computed(() => {
     const activePlayers = this.players().filter(p => p.mode !== 'spectator');
@@ -35,6 +38,11 @@ export class VotingTableComponent {
   readonly showRevealButton = computed(() => {
     return this.gameStatus() === 'voting' && this.allVoted() && this.isAdmin();
   });
+
+  getMenuDirection(index: number, total: number): 'up' | 'down' {
+    const angle = this.getAngle(index, total);
+    return Math.sin(angle) < 0 ? 'down' : 'up';
+  }
 
   getCardState(player: Player): 'empty' | 'selected' | 'revealed' {
     if (!player.selectedCard) return 'empty';

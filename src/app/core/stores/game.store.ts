@@ -91,7 +91,7 @@ export class GameStore implements OnDestroy {
     this.channel.postMessage(game);
   }
 
-  // Acciones 
+  // Acciones
 
   setCards(values: (string | number)[]): void {
     this._cards.set(createCards(values));
@@ -210,6 +210,22 @@ export class GameStore implements OnDestroy {
       ...game,
       players: game.players.map(p => ({ ...p, selectedCard: null })),
       status: 'voting'
+    };
+
+    this._game.set(updated);
+    this.saveToStorage(updated);
+    this.broadcast(updated);
+  }
+
+  promoteToAdmin(playerId: string): void {
+    const game = this._game();
+    if (!game || !this.isCurrentUserAdmin()) return;
+
+    const updated: Game = {
+      ...game,
+      players: game.players.map(p =>
+        p.id === playerId ? { ...p, role: 'admin' as const } : p
+      )
     };
 
     this._game.set(updated);
