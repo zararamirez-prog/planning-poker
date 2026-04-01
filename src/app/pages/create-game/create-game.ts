@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CreateGameFormComponent } from '../../shared/organisms/create-game-form/create-game-form';
 import { HeaderComponent } from '../../shared/organisms/header/header';
 import { UserFormComponent } from '../../shared/organisms/user-form/user-form';
-import { GameStore } from '../../core/store/game.store';
+import { GameStore } from '../../core/stores/game.store';
 import { PlayerMode } from '../../core/models/game.model';
 
 @Component({

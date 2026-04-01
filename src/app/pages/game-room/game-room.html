@@ -4,7 +4,9 @@
     [gameName]="gameName()"
     [userName]="currentPlayer()?.name ?? ''"
     [isAdmin]="isAdmin()"
+    [currentMode]="currentPlayerMode()"
     (inviteClick)="onInviteClick()"
+    (modeChange)="onModeChange($event)"
   />
 
   <app-voting-table

@@ -7,7 +7,7 @@ import { InviteModalComponent } from '../../shared/organisms/invite-modal/invite
 import { VotingTableComponent } from '../../shared/organisms/voting-table/voting-table';
 import { CardPoolComponent } from '../../shared/organisms/card-pool/card-pool';
 import { VoteSummaryComponent } from '../../shared/molecules/vote-summary/vote-summary';
-import { GameStore } from '../../core/store/game.store';
+import { GameStore } from '../../core/stores/game.store';
 import { Card } from '../../core/models/game.model';
 
 @Component({
@@ -44,8 +44,8 @@ export class GameRoomComponent implements OnInit {
   readonly isAdmin = this.gameStore.isCurrentUserAdmin;
   readonly hasAnyVote = this.gameStore.hasAnyVote;
 
-  /** Datos para VoteSummaryComponent */
   readonly voteGroups = this.gameStore.voteGroups;
+  readonly currentPlayerMode = this.gameStore.currentPlayerMode;
   readonly average = this.gameStore.average;
 
   readonly gameExists = computed(() => this.gameStore.game() !== null);
@@ -63,7 +63,6 @@ export class GameRoomComponent implements OnInit {
     return player.mode === 'player' && this.gameStore.status() === 'voting';
   });
 
-  /** Muestra el resumen de votos en el footer cuando las cartas están reveladas */
   readonly showVoteSummary = computed(() => this.gameStore.status() === 'revealed');
 
   ngOnInit(): void {
@@ -100,6 +99,13 @@ export class GameRoomComponent implements OnInit {
 
   onRevealCards(): void {
     this.gameStore.revealCards();
+  }
+
+  onModeChange(mode: 'player' | 'spectator'): void {
+    const userId = this.currentUserId();
+    if (userId) {
+      this.gameStore.updatePlayerMode(userId, mode);
+    }
   }
 
   onResetGame(): void {
