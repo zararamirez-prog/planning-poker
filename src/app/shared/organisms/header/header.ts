@@ -1,12 +1,13 @@
-import { Component, input, output, signal } from '@angular/core';
-import { AvatarComponent } from '../../atoms/avatar/avatar';
+import { Component, input, output } from '@angular/core';
 import { ButtonComponent } from '../../atoms/button/button';
-import { PlayerMode } from '../../../core/models/game.model';
+import { UserMenuComponent } from '../../molecules/user-menu/user-menu';
+import { PlayerMode, GameStatus } from '../../../core/models/game.model';
+import { CardMode } from '../../../core/models/card-mode.model';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [AvatarComponent, ButtonComponent],
+  imports: [ButtonComponent, UserMenuComponent],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
@@ -16,26 +17,15 @@ export class HeaderComponent {
   readonly inline = input<boolean>(false);
   readonly isAdmin = input<boolean>(false);
   readonly currentMode = input<PlayerMode>('player');
+  readonly cardModes = input<CardMode[]>([]);
+  readonly currentCardModeId = input<string>('');
+  readonly gameStatus = input<GameStatus>('voting');
 
   readonly inviteClick = output<void>();
   readonly modeChange = output<PlayerMode>();
-
-  readonly showModeMenu = signal(false);
+  readonly cardModeChange = output<string>();
 
   onInviteClick(): void {
     this.inviteClick.emit();
-  }
-
-  onAvatarClick(): void {
-    this.showModeMenu.update(v => !v);
-  }
-
-  onModeSelect(mode: PlayerMode): void {
-    this.modeChange.emit(mode);
-    this.showModeMenu.set(false);
-  }
-
-  onCloseMenu(): void {
-    this.showModeMenu.set(false);
   }
 }

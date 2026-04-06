@@ -57,11 +57,11 @@ describe('HeaderComponent', () => {
     expect(title).toBeNull();
   });
 
-  it('should render avatar when userName is provided', () => {
+  it('should render user-menu when userName is provided', () => {
     componentRef.setInput('userName', 'Luisa');
     fixture.detectChanges();
-    const avatar = fixture.debugElement.query(By.css('app-avatar'));
-    expect(avatar).toBeTruthy();
+    const userMenu = fixture.debugElement.query(By.css('app-user-menu'));
+    expect(userMenu).toBeTruthy();
   });
 
   it('should not render actions when userName is empty', () => {
@@ -84,64 +84,5 @@ describe('HeaderComponent', () => {
     const button = fixture.debugElement.query(By.css('app-button'));
     button.triggerEventHandler('click', null);
     expect(emitted).toBe(true);
-  });
-
-  describe('mode menu', () => {
-    beforeEach(() => {
-      componentRef.setInput('userName', 'Luisa');
-      componentRef.setInput('currentMode', 'player');
-      fixture.detectChanges();
-    });
-
-    it('should not show mode menu by default', () => {
-      const menu = fixture.debugElement.query(By.css('.header__mode-menu'));
-      expect(menu).toBeNull();
-    });
-
-    it('should show mode menu when avatar is clicked', () => {
-      const trigger = fixture.debugElement.query(By.css('.header__avatar-trigger'));
-      trigger.triggerEventHandler('click', null);
-      fixture.detectChanges();
-      const menu = fixture.debugElement.query(By.css('.header__mode-menu'));
-      expect(menu).toBeTruthy();
-    });
-
-    it('should toggle mode menu on consecutive avatar clicks', () => {
-      const trigger = fixture.debugElement.query(By.css('.header__avatar-trigger'));
-      trigger.triggerEventHandler('click', null);
-      fixture.detectChanges();
-      expect(component.showModeMenu()).toBe(true);
-
-      trigger.triggerEventHandler('click', null);
-      fixture.detectChanges();
-      expect(component.showModeMenu()).toBe(false);
-    });
-
-    it('should close menu when backdrop is clicked', () => {
-      component.showModeMenu.set(true);
-      fixture.detectChanges();
-      const backdrop = fixture.debugElement.query(By.css('.header__backdrop'));
-      backdrop.triggerEventHandler('click', null);
-      fixture.detectChanges();
-      expect(component.showModeMenu()).toBe(false);
-    });
-
-    it('should emit modeChange and close menu when option is selected', () => {
-      component.showModeMenu.set(true);
-      fixture.detectChanges();
-      let emitted: string | null = null;
-      component.modeChange.subscribe(v => emitted = v);
-      component.onModeSelect('spectator');
-      expect(emitted).toBe('spectator');
-      expect(component.showModeMenu()).toBe(false);
-    });
-
-    it('should mark active option based on currentMode', () => {
-      componentRef.setInput('currentMode', 'spectator');
-      component.showModeMenu.set(true);
-      fixture.detectChanges();
-      const options = fixture.debugElement.queryAll(By.css('.header__mode-option--active'));
-      expect(options.length).toBe(1);
-    });
   });
 });

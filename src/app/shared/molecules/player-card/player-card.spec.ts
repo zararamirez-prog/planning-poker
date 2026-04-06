@@ -59,20 +59,6 @@ describe('PlayerCardComponent', () => {
     expect(avatar).toBeNull();
   });
 
-  it('should show admin badge when player is admin', () => {
-    componentRef.setInput('isPlayerAdmin', true);
-    fixture.detectChanges();
-    const badge = fixture.debugElement.query(By.css('.player-card__admin-badge'));
-    expect(badge).toBeTruthy();
-  });
-
-  it('should not show admin badge when player is not admin', () => {
-    componentRef.setInput('isPlayerAdmin', false);
-    fixture.detectChanges();
-    const badge = fixture.debugElement.query(By.css('.player-card__admin-badge'));
-    expect(badge).toBeNull();
-  });
-
   it('should pass cardValue to card component', () => {
     componentRef.setInput('cardState', 'selected');
     componentRef.setInput('cardValue', { id: '5', value: 5 });

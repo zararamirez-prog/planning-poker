@@ -1,6 +1,6 @@
 <div class="player-card" (click)="onCardClick()">
   @if (isSpectator()) {
-    <app-avatar [name]="playerName()" size="md" />
+    <app-avatar [name]="displayName()" size="md" />
   } @else {
     <app-card
       [state]="cardState()"
@@ -8,12 +8,8 @@
       [variant]="cardVariant()"
     />
   }
-  <span class="player-card__name">
-    {{ playerName() }}
-    @if (isPlayerAdmin()) {
-      <span class="player-card__admin-badge">★</span>
-    }
-  </span>
+
+  <span class="player-card__name">{{ displayName() }}</span>
 
   @if (isMenuOpen()) {
     <div
@@ -21,9 +17,10 @@
       [class.player-card__menu--down]="menuDirection() === 'down'"
       (click)="$event.stopPropagation()"
     >
-      <span class="player-card__menu-name">{{ playerName() }}</span>
+      <span class="player-card__menu-name">{{ displayName() }}</span>
+      <div class="player-card__menu-divider"></div>
       <button class="player-card__menu-action" (click)="onPromote()">
-        ★ Hacer administrador
+        Hacer administrador
       </button>
     </div>
   }
