@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GameRoomComponent } from './game-room';
 import { GameStore } from '../../core/stores/game.store';
+import { provideRouter } from '@angular/router';
 
 describe('GameRoomComponent', () => {
   let component: GameRoomComponent;
@@ -9,7 +10,8 @@ describe('GameRoomComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GameRoomComponent]
+      imports: [GameRoomComponent],
+      providers: [provideRouter([])]
     }).compileComponents();
 
     fixture = TestBed.createComponent(GameRoomComponent);
@@ -20,11 +22,8 @@ describe('GameRoomComponent', () => {
   });
 
   afterEach(() => {
-    (gameStore as any)._game.set(null);
-    (gameStore as any)._currentPlayerId.set(null);
-    sessionStorage.removeItem('planning_poker_player_id');
+    gameStore.clearCurrentPlayer();
     localStorage.removeItem('planning_poker_game');
-    localStorage.removeItem('planning_poker_player_id');
   });
 
   it('should create', () => {
