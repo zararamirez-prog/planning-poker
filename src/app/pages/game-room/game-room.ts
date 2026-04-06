@@ -46,6 +46,8 @@ export class GameRoomComponent implements OnInit {
 
   readonly voteGroups = this.gameStore.voteGroups;
   readonly currentPlayerMode = this.gameStore.currentPlayerMode;
+  readonly cardModes = this.gameStore.cardModes;
+  readonly currentCardModeId = this.gameStore.currentCardModeId;
   readonly average = this.gameStore.average;
 
   readonly gameExists = computed(() => this.gameStore.game() !== null);
@@ -99,6 +101,10 @@ export class GameRoomComponent implements OnInit {
 
   onRevealCards(): void {
     this.gameStore.revealCards();
+  }
+
+  onCardModeChange(modeId: string): void {
+    this.gameStore.setCardMode(modeId);
   }
 
   onModeChange(mode: 'player' | 'spectator'): void {

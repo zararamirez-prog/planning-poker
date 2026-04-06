@@ -2,6 +2,7 @@ import { Component, input, output, computed } from '@angular/core';
 import { CardComponent, CardState, CardVariant } from '../../atoms/card/card';
 import { AvatarComponent } from '../../atoms/avatar/avatar';
 import { Card } from '../../../core/models/game.model';
+import { capitalizeName } from '../../../core/utils/game.utils';
 
 @Component({
   selector: 'app-player-card',
@@ -24,6 +25,8 @@ export class PlayerCardComponent {
 
   readonly promotePlayer = output<void>();
   readonly menuToggle = output<void>();
+
+  readonly displayName = computed(() => capitalizeName(this.playerName()));
 
   readonly canPromote = computed(() =>
     this.isAdmin() && !this.isCurrentUser() && !this.isPlayerAdmin()

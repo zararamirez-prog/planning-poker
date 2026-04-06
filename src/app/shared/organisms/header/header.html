@@ -13,62 +13,19 @@
 
   @if (userName()) {
     <div class="header__actions">
-      <div class="header__avatar-wrapper">
-        <div
-          class="header__avatar-trigger"
-          [class.header__avatar-trigger--active]="showModeMenu()"
-          (click)="onAvatarClick()"
-        >
-          <app-avatar [name]="userName()" size="md" />
-        </div>
-
-        @if (showModeMenu()) {
-          <div class="header__mode-menu" (click)="$event.stopPropagation()">
-            <div class="header__mode-menu-user">
-              <span class="header__mode-menu-name">{{ userName() }}</span>
-            </div>
-            <div class="header__mode-menu-divider"></div>
-            <div class="header__mode-menu-options">
-              <button
-                class="header__mode-option"
-                [class.header__mode-option--active]="currentMode() === 'player'"
-                (click)="onModeSelect('player')"
-              >
-                <span class="header__mode-option-icon">🎮</span>
-                <div class="header__mode-option-content">
-                  <span class="header__mode-option-label">Jugador</span>
-                  <span class="header__mode-option-desc">Puede elegir y votar cartas</span>
-                </div>
-                @if (currentMode() === 'player') {
-                  <span class="header__mode-option-check">✓</span>
-                }
-              </button>
-              <button
-                class="header__mode-option"
-                [class.header__mode-option--active]="currentMode() === 'spectator'"
-                (click)="onModeSelect('spectator')"
-              >
-                <span class="header__mode-option-icon">👁️</span>
-                <div class="header__mode-option-content">
-                  <span class="header__mode-option-label">Espectador</span>
-                  <span class="header__mode-option-desc">Solo observa la partida</span>
-                </div>
-                @if (currentMode() === 'spectator') {
-                  <span class="header__mode-option-check">✓</span>
-                }
-              </button>
-            </div>
-          </div>
-        }
-      </div>
-
+      <app-user-menu
+        [userName]="userName()"
+        [isAdmin]="isAdmin()"
+        [currentMode]="currentMode()"
+        [cardModes]="cardModes()"
+        [currentCardModeId]="currentCardModeId()"
+        [gameStatus]="gameStatus()"
+        (modeChange)="modeChange.emit($event)"
+        (cardModeChange)="cardModeChange.emit($event)"
+      />
       <app-button variant="secondary" size="sm" (click)="onInviteClick()">
         Invitar jugadores
       </app-button>
     </div>
   }
 </header>
-
-@if (showModeMenu()) {
-  <div class="header__backdrop" (click)="onCloseMenu()"></div>
-}

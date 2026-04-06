@@ -5,8 +5,12 @@
     [userName]="currentPlayer()?.name ?? ''"
     [isAdmin]="isAdmin()"
     [currentMode]="currentPlayerMode()"
+    [cardModes]="cardModes"
+    [currentCardModeId]="currentCardModeId()"
+    [gameStatus]="gameStatus()"
     (inviteClick)="onInviteClick()"
     (modeChange)="onModeChange($event)"
+    (cardModeChange)="onCardModeChange($event)"
   />
 
   <app-voting-table
