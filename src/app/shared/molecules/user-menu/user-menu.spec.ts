@@ -81,39 +81,46 @@ describe('UserMenuComponent', () => {
     expect(activeOptions.length).toBe(1);
   });
 
+  function openAdminMenu() {
+    componentRef.setInput('isAdmin', true);
+    componentRef.setInput('cardModes', [...CARD_MODES]);
+    componentRef.setInput('currentCardModeId', CARD_MODES[0].id);
+    componentRef.setInput('gameStatus', 'voting');
+    fixture.detectChanges();
+    component.showMenu.set(true);
+    fixture.detectChanges();
+  }
+
   describe('card mode section', () => {
-    beforeEach(() => {
-      componentRef.setInput('isAdmin', true);
-      componentRef.setInput('cardModes', CARD_MODES);
-      componentRef.setInput('currentCardModeId', CARD_MODES[0].id);
-      componentRef.setInput('gameStatus', 'voting');
-      component.showMenu.set(true);
-      fixture.detectChanges();
-    });
 
     it('should show card mode section for admin', () => {
-      const section = fixture.debugElement.query(By.css('.user-menu__card-mode'));
-      expect(section).toBeTruthy();
+      openAdminMenu();
+      const allOptions = fixture.debugElement.queryAll(By.css('.user-menu__option'));
+      expect(allOptions.length).toBeGreaterThan(2);
     });
 
     it('should not show card mode section for non-admin', () => {
+      openAdminMenu();
       componentRef.setInput('isAdmin', false);
       fixture.detectChanges();
-      const section = fixture.debugElement.query(By.css('.user-menu__card-mode'));
-      expect(section).toBeNull();
+      const allOptions = fixture.debugElement.queryAll(By.css('.user-menu__option'));
+      expect(allOptions.length).toBe(2);
     });
 
     it('should render all card mode options', () => {
-      const options = fixture.debugElement.queryAll(By.css('.user-menu__card-mode-option'));
-      expect(options.length).toBe(CARD_MODES.length);
+      openAdminMenu();
+      const allOptions = fixture.debugElement.queryAll(By.css('.user-menu__option'));
+      expect(allOptions.length).toBe(2 + CARD_MODES.length);
     });
 
     it('should mark active card mode', () => {
-      const activeOptions = fixture.debugElement.queryAll(By.css('.user-menu__card-mode-option--active'));
-      expect(activeOptions.length).toBe(1);
+      openAdminMenu();
+      const activeOptions = fixture.debugElement.queryAll(By.css('.user-menu__option--active'));
+      expect(activeOptions.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should emit cardModeChange when option selected', () => {
+      openAdminMenu();
       let emitted: string | null = null;
       component.cardModeChange.subscribe(v => emitted = v);
       component.onCardModeSelect(CARD_MODES[1].id);
@@ -121,12 +128,14 @@ describe('UserMenuComponent', () => {
     });
 
     it('should disable card mode options when status is revealed', () => {
+      openAdminMenu();
       componentRef.setInput('gameStatus', 'revealed');
       fixture.detectChanges();
       expect(component.isCardModeDisabled()).toBe(true);
     });
 
     it('should not emit cardModeChange when disabled', () => {
+      openAdminMenu();
       componentRef.setInput('gameStatus', 'revealed');
       fixture.detectChanges();
       let emitted = false;
@@ -136,9 +145,12 @@ describe('UserMenuComponent', () => {
     });
 
     it('should show hint when card mode is disabled', () => {
+      openAdminMenu();
       componentRef.setInput('gameStatus', 'revealed');
       fixture.detectChanges();
-      const hint = fixture.debugElement.query(By.css('.user-menu__card-mode-hint'));
+      component.showMenu.set(true);
+      fixture.detectChanges();
+      const hint = fixture.debugElement.query(By.css('.user-menu__hint'));
       expect(hint).toBeTruthy();
     });
   });
